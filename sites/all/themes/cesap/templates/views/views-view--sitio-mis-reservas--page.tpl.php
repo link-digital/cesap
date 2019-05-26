@@ -58,7 +58,7 @@ var app = new Vue({
     var _this = this;
     _this.processing = true;
     jQuery
-      .getJSON('/cesap/ezapp/appointments')
+      .getJSON(Drupal.settings.basePath + 'ezapp/appointments')
       .done(function(d){
         _this.appointments = d.appointments;
         _this.services = d.services;
