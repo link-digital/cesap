@@ -1,0 +1,400 @@
+<?php
+
+define('EA_PROVIDER_ID', 2);
+
+/**
+* Implementation of hook_permission().
+*/
+function ezapp_permission()
+{
+
+  return array(
+    'ezapp create appointment' => array(
+      'title' => t('Create Easy! Appointment'),
+      'description' => t('Allow user to create appointment on Easy! Appointments.'),
+    ),
+  );
+
+}
+
+/**
+* Implementation of hook_services_resources().
+*/
+function ezapp_services_resources()
+{
+  return array(
+    'menu' => array(
+
+      'operations' => array(
+        'index' => array(
+          'callback' => '_ezapp_services_menu_index',
+          'access callback' => '_ezapp_services_access',
+          'access arguments' => array('view'),
+          'access arguments append' => FALSE,
+        ),
+
+      ),
+    ),
+    'availabilities' => array(
+
+      'operations' => array(
+        'index' => array(
+          'callback' => '_ezapp_services_availabilities_index',
+          'access callback' => '_ezapp_services_access',
+          'access arguments' => array('view'),
+          'access arguments append' => FALSE,
+        ),
+
+      ),
+    ),
+    'services' => array(
+
+      'operations' => array(
+        'index' => array(
+          'callback' => '_ezapp_services_services_index',
+          'access callback' => '_ezapp_services_access',
+          'access arguments' => array('view'),
+          'access arguments append' => FALSE,
+        ),
+
+      ),
+    ),
+    'appointments' => array(
+
+      'operations' => array(
+        'index' => array(
+          'callback' => '_ezapp_services_appoinments_index',
+          'access callback' => '_ezapp_services_access',
+          'access arguments' => array('view'),
+          'access arguments append' => FALSE,
+        ),
+
+        'create' => array(
+          'callback' => '_ezapp_services_appoinments_create',
+          'args' => array(
+            array(
+              'name' => 'appointment',
+              'optional' => TRUE,
+              'source' => 'data',
+              'description' => 'The appointment data to create',
+              'type' => 'array',
+            ),
+          ),
+          'access callback' => '_ezapp_services_access',
+          'access arguments' => array('create'),
+          'access arguments append' => TRUE,
+        ),
+
+      ),
+    ),
+  );
+}
+
+function _ezapp_services_appoinments_create($data)
+{
+  global $user;
+  $account = user_load($user->uid);
+  
+  $data['customer'] = array(
+    // 'uid' => $account->uid,
+    'first_name' => $account->name,
+    'last_name' => $account->name,
+    'phone_number' => uniqid(),
+    'email' => $account->uid . '@cesap-ea.local',
+  );
+
+  $services = $ea_services = _ezapp_get_services();
+  $service = $services[$data['serviceId']];
+
+  $data['end'] = date('Y-m-d H:i:s', strtotime($data['start']) + ($service->duration  * 60));
+  $data['providerId'] = EA_PROVIDER_ID;
+
+  $appointment = EAServices::post('appointments', $data, 'POST');
+
+  return $appointment;
+}
+
+function _ezapp_get_services($cid = NULL)
+{
+  $type = 'services';
+  $cache_name = $cid ? $type . '_' . $cid : $type;
+  if($cached = cache_get('ea_' . $cache_name, 'cache'))
+  {
+    $output = $cached->data;
+  }
+  else
+  {
+    $output = EAServices::getAssoc($type . '?categoryId=' . $cid);
+    cache_set('ea_' . $cache_name, $output, 'cache', (REQUEST_TIME + 60*60));
+  }
+
+  return $output;
+}
+
+function _ezapp_get_sport_categories()
+{
+  if($cached = cache_get('ea_categories', 'cache'))
+  {
+    $ea_categories = $cached->data;
+  }
+  else
+  {
+    $ea_categories = EAServices::getAssoc('categories');
+    cache_set('ea_categories', $ea_categories, 'cache', (REQUEST_TIME + 60*60));
+  }
+
+  return $ea_categories;
+}
+
+function _ezapp_services_menu_index()
+{
+  global $user;
+
+  try
+  {
+    $menu = array();
+    // $categories = EAServices::categories();
+
+    if($cached = cache_get('ea_categories', 'cache'))
+    {
+      $ea_categories = $cached->data;
+    }
+    else
+    {
+      $ea_categories = EAServices::getAssoc('categories');
+      cache_set('ea_categories', $ea_categories, 'cache', (REQUEST_TIME + 60*60));
+    }
+    
+    $ea_services = _ezapp_get_services();
+    // $ea_services = cache_get('ea_services', 'cache');
+
+    // if(empty($ea_services))
+    // {
+    //   $ea_services = EAServices::getAssoc('categories');
+    //   cache_set('ea_services', $ea_services, 'cache', (REQUEST_TIME + 60*60));
+    // }
+
+    foreach($ea_categories as &$c)
+    {
+      $c->services = array();
+    }
+
+    // foreach(EAServices::getAssoc('services') as $s)
+    foreach($ea_services as $s)
+    {
+      switch(_ezapp_user_category())
+      {
+        case 'a':
+          unset($s->priceb);
+          break;
+        case 'b':
+          $s->price = $s->priceb;
+          unset($s->priceb);
+          break;
+      }
+
+      $s->price = (int) $s->price;
+
+      $ea_categories[$s->categoryId]->services[] = $s;
+    }
+
+    return array_values($ea_categories);
+
+  }
+  catch(Exception $e)
+  {
+    return array(
+      'status' => 'error',
+      'data' => array(
+        'message' => $e->getMessage(),
+      )
+    );
+  }
+
+}
+
+function _ezapp_services_availabilities_index()
+{
+  $sid = isset($_GET['serviceId']) ? $_GET['serviceId'] : 0;
+  $cid = isset($_GET['categoryId']) ? $_GET['categoryId'] : 0;
+  $date = $_GET['date'];
+
+  try
+  {
+    if($cid)
+    {
+      // $avail = EAServices::get("availabilities?providerId=" . EA_PROVIDER_ID . "&serviceId={$sid}&categoryId={$cid}&date={$date}");
+      $avail = EAServices::get("availabilities?providerId=" . EA_PROVIDER_ID . "&categoryId={$cid}&date={$date}");
+
+      foreach($avail->services as &$s)
+      {
+        _ezapp_set_user_service_price($s);
+      }
+    }
+    else
+    {
+      $avail = EAServices::get("availabilities?providerId=" . EA_PROVIDER_ID . "&serviceId={$sid}&date={$date}");
+    }
+    
+    return $avail;
+  }
+  catch(Exception $e)
+  {
+    return array(
+      'status' => 'error',
+      'data' => array(
+        'message' => $e->getMessage(),
+      )
+    );
+  }
+
+}
+
+function _ezapp_services_services_index()
+{
+  $cid = isset($_GET['categoryId']) ? $_GET['categoryId'] : 0;
+
+  try
+  {
+    if($cid)
+    {
+      $services = _ezapp_get_services($cid);
+
+      foreach($services as &$s)
+      {
+        _ezapp_set_user_service_price($s);
+      }
+    }
+    else
+    {
+      die(':/');
+    }
+    
+    return $services;
+  }
+  catch(Exception $e)
+  {
+    return array(
+      'status' => 'error',
+      'data' => array(
+        'message' => $e->getMessage(),
+      )
+    );
+  }
+
+}
+
+function _ezapp_services_appoinments_index()
+{
+
+  try
+  {
+    global $user;
+    
+    $mail = $user->uid . '@cesap-ea.local';
+    // $mail = '4@cesap-ea.local';
+    // $account = user_load($user->uid);
+    $appointments = EAServices::get("appointments?customerEmail=" . $mail);
+    if(empty($appointments))
+    {
+      return [];
+    }
+    else
+    {
+      $customer_services = [];
+      $services = _ezapp_get_services();
+      $categories = _ezapp_get_sport_categories();
+
+      foreach($services as &$s)
+      {
+        _ezapp_set_user_service_price($s);
+        $s->category = $categories[$s->categoryId]->name;
+      }
+
+      foreach($appointments as &$a)
+      {
+        $ts_start = strtotime($a->start);
+        $ts_end = strtotime($a->end);
+        $a->time_start = date('H:i', $ts_start);
+        $a->time_end = date('H:i', $ts_end);
+        $a->date_start = date('d/m/Y', $ts_start);
+
+        $service = $services[$a->serviceId];
+        // _ezapp_set_user_service_price($service);
+
+        $customer_services[$a->serviceId] = $service;
+        // $customer_services[$a->serviceId]['price'] = _ezapp_user_price($services[$a->serviceId]);
+      }
+
+      return [
+        'appointments' => $appointments,
+        'services' => $customer_services,
+      ];
+    }
+
+  }
+  catch(Exception $e)
+  {
+    return array(
+      'status' => 'error',
+      'data' => array(
+        'message' => $e->getMessage(),
+      )
+    );
+  }
+
+}
+
+function _ezapp_services_access($accessa)
+{
+  // return true;
+  return user_access('ezapp create appointment');
+}
+
+function _ezapp_user_category($account = NULL)
+{
+  $category = &drupal_static(__FUNCTION__);
+
+  if(!$category)
+  {
+    if(!$account)
+    {
+      global $user;
+      $account = user_load($user->uid);
+    }
+
+    $f_user_category = field_get_items('user', $account, 'field_user_category');
+    $category = $f_user_category[0]['value'];  
+  }
+
+  return $category;
+}
+
+function _ezapp_user_price($service)
+{
+  $price = 0;
+  $cat = _ezapp_user_category();
+
+  switch($cat)
+  {
+    case 'a':
+      $price = $service->price;
+      break;
+    case 'b':
+      $price = $service->priceb;
+      break;
+    default:
+      $price = $service->price;
+      break;
+  }
+
+  return $price;
+}
+
+function _ezapp_set_user_service_price(&$service)
+{
+  $service->price = _ezapp_user_price($service);
+  $service->price_formatted = '$' . number_format($service->price, 0);
+  unset($service->priceb);
+}
+

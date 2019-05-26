@@ -1,0 +1,215 @@
+#top-menu-container
+{
+  @media (max-width:$screen-md - 1)
+  {
+    display: none;
+  }
+}
+
+#header-container
+{
+  margin: 0;
+
+  @media (max-width:$screen-md - 1)
+  {
+    height: 40px;
+  }
+
+  @media (min-width:$screen-md)
+  {
+    height: 120px;
+    // padding-top: 10px;
+    padding-bottom: 10px;
+
+    .flex-header
+    {
+      @media (min-width:$screen-lg)
+      {
+        margin-top: 5px;
+      }
+
+      @media (max-width:$screen-lg - 1)
+      {
+        margin-top: 15px;
+      }
+    }
+  }
+}
+
+#header-bar-sm
+{
+  
+  @media (max-width:$screen-md - 1)
+  {
+    display: block;
+  }
+
+  NAV#main-nav-sm #mobile-menu-wrapper
+  {
+    background: $green-1;
+  }
+
+  #main-menu-mobile
+  {
+    @include font-size(xl);
+
+    LI
+    {
+      padding-top: 7px;
+      padding-bottom: 7px;
+    }
+
+    A.active
+    {
+      color: $white;
+    }
+  }
+
+  #top-bar-sm
+  {
+    border-top: 1px solid $white;
+    @include font-size(l);
+
+    A.active
+    {
+      color: $white;
+    }
+  }
+
+  .login
+  {
+    padding-left: 20px;
+    padding-right: 20px;
+
+    .btn
+    {
+      width: 100%;
+      position: relative;
+
+      .fa
+      {
+        position: absolute;
+        right: 15px;
+        top: 4px;
+        font-size: 22px;
+      }
+    }
+  }
+
+}
+
+#header-bar-lg
+{
+  padding: 0;
+
+  @media (max-width:$screen-md - 1)
+  {
+    display: none;
+  }
+
+  .logo-lg
+  {
+    height: auto;
+  }
+
+  .flex-header
+  {
+    align-items: center;
+  }
+
+  .logo-link
+  {
+    @media (min-width:$screen-sm) AND (max-width:$screen-lg - 1)
+    {
+      flex: 0 0 300px;
+      max-width: 300px;
+    }
+
+    @media (min-width:$screen-lg)
+    {
+      flex: 0 0 458px;
+      max-width: 458px;
+    }
+  }
+
+  .login
+  {
+    white-space: nowrap;
+  }
+
+  #main-nav-lg
+  {
+    flex-grow: 1;
+  }
+
+  #main-menu-desk
+  {
+    font-family: $font-roboto-cnd;
+    color: $blue-1;
+    justify-content: flex-end;
+    margin: 0 20px;
+
+    @media (max-width:$screen-lg - 1)
+    {
+      @include font-size(n);
+    }
+
+    @media (min-width:$screen-lg)
+    {
+      @include font-size(xn);
+    }
+
+    LI
+    {
+      margin-left: 5px;
+      margin-right: 5px;
+      text-align: center;
+
+      A
+      {
+        padding-left: 5px;
+        padding-right: 5px;
+        position: relative;
+
+        &:after
+        {
+          content: ' ';
+          position: absolute;
+          bottom: -5px;
+          left: 50%;
+          width: 0;
+          height: 3px;
+          border-radius: 3px;
+          transition: all .3s;
+        }
+
+        &:hover, &.active
+        {
+          &:after
+          {
+            width: 100%;
+            left: 0;
+            background-color: $green-1;
+          }
+        }
+      }
+    }
+  }
+}
+
+#header-bar-lg.fixed-menu
+{
+  border-bottom: 1px solid $blue-1;
+  height: 94px !important;
+  z-index: 110;
+
+  .flex-header
+  {
+    margin-top: 5px;
+  }
+
+  .login
+  {
+    margin-top: -4px;
+  }
+}

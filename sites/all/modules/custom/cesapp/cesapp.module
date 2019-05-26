@@ -1,0 +1,360 @@
+<?php
+/**
+* Implementation of hook_services_resources().
+*/
+function cesapp_services_resources()
+{
+  return array(
+    'user' => array(
+
+      'actions' => array(
+        'applogin' => array(
+          'help' => 'Login a user for a new session',
+          'callback' => '_cesapp_user_resource_login',
+          'access callback' => '_cesapp_login_menu',
+          'args' => array(
+            array(
+              'name' => 'username',
+              'type' => 'string',
+              'description' => 'A valid username',
+              'source' => array('data' => 'username'),
+              'optional' => FALSE,
+            ),
+            array(
+              'name' => 'password',
+              'type' => 'string',
+              'description' => 'A valid password',
+              'source' => array('data' => 'password'),
+              'optional' => FALSE,
+            ),
+            array(
+              'name' => 'device',
+              'type' => 'string',
+              'description' => 'Device uuid',
+              'source' => array('data' => 'device'),
+              'optional' => FALSE,
+            ),
+          ),
+        ),
+
+        'applogout' => array(
+          'help' => 'Logout a user session',
+          'callback' => '_cesapp_user_resource_logout',
+          'access callback' => '_cesapp_login_menu',
+
+          'args' => array(
+            array(
+              'name' => 'uid',
+              'type' => 'string',
+              'description' => 'User id',
+              'source' => array('data' => 'uid'),
+              'optional' => FALSE,
+            ),
+            array(
+              'name' => 'token',
+              'type' => 'string',
+              'description' => 'A valid token',
+              'source' => array('data' => 'token'),
+              'optional' => FALSE,
+            ),
+            array(
+              'name' => 'device',
+              'type' => 'string',
+              'description' => 'Device uuid',
+              'source' => array('data' => 'device'),
+              'optional' => FALSE,
+            ),
+          ),
+
+        ),
+
+        'applogintoken' => array(
+          'help' => 'Login user with token',
+          'callback' => '_cesapp_user_resource_logintoken',
+          'access callback' => '_cesapp_login_menu',
+          'args' => array(
+            array(
+              'name' => 'uid',
+              'type' => 'string',
+              'description' => 'User id',
+              'source' => array('data' => 'uid'),
+              'optional' => FALSE,
+            ),
+            array(
+              'name' => 'token',
+              'type' => 'string',
+              'description' => 'A valid token',
+              'source' => array('data' => 'token'),
+              'optional' => FALSE,
+            ),
+            array(
+              'name' => 'device',
+              'type' => 'string',
+              'description' => 'Device uuid',
+              'source' => array('data' => 'device'),
+              'optional' => FALSE,
+            ),
+          ),
+        ),
+
+      ),
+
+    ),
+
+    'content' => array(
+      
+      'operations' => array(
+        'retrieve' => array(
+          'help' => 'Retrieve content',
+          'callback' => '_cesapp_services_content_retrieve',
+          'access callback' => '_cesapp_services_access',
+          'file' => array('type' => 'inc', 'module' => 'cesapp', 'name' => 'resources/content_resource'),
+          'args' => array(
+            array(
+              'name' => 'type',
+              'type' => 'string',
+              'description' => 'The content to retrieve.',
+              'source' => array('path' => 0),
+              'optional' => FALSE,
+            ),
+          ),
+        ),
+
+      ),
+
+    ),
+  );
+}
+
+function _cesapp_services_access($accessa)
+{
+  return true;
+}
+
+function cesapp_entity_info_alter(&$entity_info)
+{
+  $entity_info['node']['view modes']['app_teaser'] = array(
+     'label' => t('App teaser'),
+     'custom settings' => TRUE,
+   );
+  $entity_info['taxonomy_term']['view modes']['app_teaser'] = array(
+     'label' => t('App teaser'),
+     'custom settings' => TRUE,
+   );
+  $entity_info['multifield']['view modes']['app_teaser'] = array(
+     'label' => t('App teaser'),
+     'custom settings' => TRUE,
+   );
+ }
+
+function _cesapp_login_menu()
+{
+  return TRUE;
+}
+
+function _______cesaap_user_login(&$edit, $account)
+{
+  db_insert('apptoken')->fields(
+    array($account->id),
+    $sessid
+  );;
+}
+
+/**
+ * Login a user using the specified credentials.
+ *
+ * Note this will transfer a plaintext password.
+ *
+ * @param $username
+ *   Username to be logged in.
+ * @param $password
+ *   Password, must be plain text and not hashed.
+ *
+ * @return
+ *   A valid session object.
+ */
+function _cesapp_user_resource_login($username, $password, $device) {
+  global $user;
+
+  if ($user->uid) {
+    // user is already logged in
+    return services_error(t('Already logged in as @user.', array('@user' => $user->name)), 406);
+  }
+
+  // Check if account is active.
+  if (user_is_blocked($username)) {
+    return services_error(t('The username %name has not been activated or is blocked.', array('%name' => $username)), 403);
+  }
+
+  // Emulate drupal native flood control: check for flood condition.
+  $flood_state = array();
+  if (variable_get('services_flood_control_enabled', TRUE)) {
+    $flood_state = _user_resource_flood_control_precheck($username);
+  }
+
+  // Only authenticate if a flood condition was not detected.
+  if (empty($flood_state['flood_control_triggered'])) {
+    $uid = user_authenticate($username, $password);
+  }
+  else {
+    $uid = FALSE;
+  }
+
+  // Emulate drupal native flood control: register flood event, and throw error
+  // if a flood condition was previously detected
+  if (variable_get('services_flood_control_enabled', TRUE)) {
+    $flood_state['uid'] = $uid;
+    _user_resource_flood_control_postcheck($flood_state);
+  }
+
+  if ($uid) {
+    $user = user_load($uid);
+    if ($user->uid) {
+      user_login_finalize();
+
+      $token = drupal_get_token('services');
+
+      db_insert('apptoken')->fields(
+        array(
+          'uid' => $user->uid,
+          'token' => $token,
+          'device' => $device,
+          'timestamp' => REQUEST_TIME,
+        )
+      )
+      ->execute();
+
+      $return = new stdClass();
+      $return->sessid = session_id();
+      $return->session_name = session_name();
+      $return->token = $token;
+
+      $account = clone $user;
+
+      services_remove_user_data($account);
+
+      $return->user = $account;
+
+      return $return;
+    }
+  }
+
+  watchdog('user', 'Invalid login attempt for %username.', array('%username' => $username));
+  return services_error(t('Wrong username or password.'), 401);
+}
+
+function _cesapp_user_resource_logintoken($uid, $token, $device) {
+  global $user;
+
+  $apptoken = db_select('apptoken', 'a')
+    ->fields('a')
+    ->condition('uid', $uid)
+    ->condition('token', $token)
+    ->execute()
+    ->fetchObject();
+
+  if($apptoken)
+  {
+    $uid = $apptoken->uid;
+  }
+  else
+  {
+    $uid = NULL;
+  }
+
+  if ($uid) {
+    $user = user_load($uid);
+    if ($user->uid) {
+      user_login_finalize();
+
+      db_delete('apptoken')
+        ->condition('device', $device)
+        ->execute()
+      ;  
+
+      $token = drupal_get_token('services');
+
+      db_insert('apptoken')->fields(
+        array(
+          'uid' => $user->uid,
+          'token' => $token,
+          'device' => $device,
+          'timestamp' => REQUEST_TIME,
+        )
+      )
+      ->execute();
+
+      $return = new stdClass();
+      $return->sessid = session_id();
+      $return->session_name = session_name();
+      $return->token = $token;
+
+      $account = clone $user;
+
+      services_remove_user_data($account);
+
+      $return->user = $account;
+
+      return $return;
+    }
+  }
+
+  watchdog('user', 'Invalid login attempt for %username.', array('%username' => $username));
+  return services_error(t('Wrong username or password.'), 401);
+}
+
+/**
+ * Logout the current user.
+ */
+function _cesapp_user_resource_logout($uid, $token, $device) {
+  global $user;
+
+  db_delete('apptoken')
+    // ->condition('uid', $uid)
+    // ->condition('token', $token)
+    ->condition('device', $device)
+    ->execute()
+    ;
+
+  if (!$user->uid) {
+    return TRUE;
+  }
+
+  watchdog('user', 'Session closed for %name.', array('%name' => $user->name));
+
+  $original_session_state = drupal_save_session();
+  drupal_save_session(TRUE);
+
+    // Destroy the current session.
+  module_invoke_all('user_logout', $user);
+  session_destroy();
+
+  // Load the anonymous user.
+  $user = drupal_anonymous_user();
+
+  drupal_save_session($original_session_state);
+
+  return TRUE;
+}
+
+function _cesapp_services_installations_index()
+{
+  echo "[0,2,4]";
+  drupal_exit();
+}
+
+function _cesapp_services_content_retrieve($id)
+{
+  $output = array(
+    'status' => 'error',
+  );
+
+  switch($id){
+    case 'installations':
+      $output = _cesapp_services_content_installations();
+    break;
+  }
+
+  echo json_encode($output);
+  drupal_exit();
+}

@@ -1,0 +1,57 @@
+@import 'drupal';
+@import 'framework';
+@import 'desk-menu';
+@import 'mobile-menu';
+
+.carousel
+{
+  .carousel-control
+  {
+    background: none;
+    font-size: 40px;
+
+
+    .fa
+    {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: all .3s;
+    }
+
+    &.left
+    {
+      .fa
+      {
+        left: 30px;
+      }
+
+      &:hover
+      {
+        transform: translateX(-15px);
+      }
+    }
+
+    &.right
+    {
+      .fa
+      {
+        right: 30px;
+      }
+
+      &:hover
+      {
+        transform: translateX(15px);
+      }
+
+    }
+  }
+
+  .carousel-indicators
+  {
+    LI
+    {
+      margin: 0 5px;
+    }
+  }
+}

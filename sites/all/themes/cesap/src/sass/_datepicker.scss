@@ -1,0 +1,25 @@
+.asd__month.hidden
+{
+  display: inline-block;
+}
+
+.asd__keyboard-shortcuts-trigger-wrapper
+{
+  display: none;
+}
+
+.asd__action-buttons BUTTON
+{
+  color: $blue-1 !important;
+}
+
+.asd__day--enabled
+{
+  border: none !important;
+  border-radius: 50%;
+}
+
+.asd__day-button, .asd__day--enabled:focus
+{
+  outline: none !important;
+}

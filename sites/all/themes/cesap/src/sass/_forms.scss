@@ -1,0 +1,223 @@
+.btn
+{
+  @include clean-button();
+  padding: .5em 1.5em;
+  text-transform: uppercase;
+  font-family: 'Roboto Condensed', $font-family-default;
+  font-weight: bold;
+
+  &.fullwidth
+  {
+    width: 100%;
+  }
+
+  &.btn-green-1-blue-1
+  {
+    background: $green-1;
+    color: $white;
+
+    &:hover
+    {
+      background: $blue-1;
+    }
+  }
+
+  &.btn-green-1-blue-2
+  {
+    background: $green-1;
+    color: $white;
+
+    &:hover
+    {
+      background: $blue-2;
+    }
+  }
+
+  &.btn-blue-1-blue-2
+  {
+    background: $blue-1;
+    color: $white;
+
+    &:hover
+    {
+      background: $blue-2;
+    }
+  }
+}
+
+.field
+{
+  background: #eaecee;
+  color: $black;
+  padding:10px 5px;
+  margin-bottom: 10px;
+
+  .input
+  {
+    flex-grow: 1;
+    
+    INPUT, TEXTAREA
+    {
+      width: 100%;
+      border: none;
+      background: none;
+      outline: none;
+    }
+  }
+}
+
+.btn-updwn
+{
+  border: 2px solid $blue-2;
+  line-height: 40px;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+}
+
+.flex-updwn
+{
+  @media (max-width:$screen-md - 1)
+  {
+    margin-bottom: 10px;
+    max-width: 300px;
+  }
+
+  .type
+  {
+    // @media (max-width:$screen-md - 1)
+    // {
+    //   max-width: 150px;
+    //   flex: 0 0 100%;
+    // }
+
+    @media (min-width:$screen-md)
+    {
+      flex-grow: 1;
+    }
+    flex-grow: 1;
+  }
+
+  .amount
+  {
+    width: 30px;
+    text-align: center;
+  }
+}
+
+.col-form-reservation
+{
+  padding-top: 20px; 
+  margin-bottom: 20px;
+  
+  @media (min-width:$screen-sm)
+  {
+    padding-bottom: 40px;
+    margin-top: -80px;
+  }
+
+  H2
+  {
+    margin-bottom: 30px;
+  }
+}
+
+.form-messages
+{
+  overflow: hidden;
+  transition: all .3s;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  &.message-error
+  {
+    color: rgb(209, 3, 3);
+  }
+
+  &.message-success
+  {
+    color: $green-1;
+  }
+}
+
+// Drupal
+.form-item
+{
+  padding: 10px 0;
+  // margin: 0 0 15px;
+}
+
+FORM
+{
+  DIV.description
+  {
+    color: $gray-6;
+    @include font-size(s);
+  }
+  
+  FIELDSET
+  {
+    // border: none;
+    // padding: 0;
+    margin: 20px 0;
+    border: 1px solid $gray-9;
+
+    LEGEND
+    {
+      @include font-size(m);
+
+      A
+      {
+        color: inherit;
+      }
+    }
+  }
+
+  .form-submit
+  {
+    @include clean-button();
+    padding: .5em 1.5em;
+    text-transform: uppercase;
+    font-family: 'Roboto Condensed', $font-family-default;
+    font-weight: bold;
+
+    background: $green-1;
+    color: $white;
+
+    &:hover
+    {
+      background: $blue-1;
+    }  
+  }
+
+}
+
+INPUT[type=text], SELECT
+{
+	min-height: 26px;
+}
+
+.views-exposed-form .views-exposed-widgets
+{
+  align-items: flex-end;
+
+  > DIV
+  {
+    padding: $lf-margin;
+  }
+
+  .form-item
+  {
+    padding: 0;
+  }
+
+  .form-submit
+  {
+    margin-top: 0;
+  }
+
+  INPUT[type=text], SELECT
+  {
+    min-height: 40px;
+  }
+}

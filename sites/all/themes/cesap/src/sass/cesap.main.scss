@@ -1,0 +1,263 @@
+$font-family-default: Helvetica, sans-serif;
+
+@import 'vars';
+@import 'framework';
+@import 'drupal';
+@import 'fonts';
+@import 'animations';
+
+BODY
+{
+  font-family: $font-family-default;
+  // font-size: $font-size;
+  // font-size: get-map($font-size, 'n');
+  @include font-size('n'); 
+  color: $gray-66;
+  line-height: 1.5;
+}
+
+A
+{
+  color: $blue-2;
+}
+
+H1, H2, H3, H4
+{
+  line-height: 1;
+}
+
+.color-white
+{
+  color: $white;
+}
+
+.color-green-1
+{
+  color: $green-1
+}
+
+.color-blue-1
+{
+  color: $blue-1
+}
+
+.color-blue-2
+{
+  color: $blue-2
+}
+
+.color-black
+{
+  color: $black
+}
+
+.color-gray-99
+{
+  color: $gray-99
+}
+
+.color-gray-35
+{
+  color: $gray-35
+}
+
+.bg-blue-1
+{
+  background-color: $blue-1;
+}
+
+.bg-green-1
+{
+  background-color: $green-1;
+}
+
+.bg-gray-ef
+{
+  background-color: $gray-ef;
+}
+
+.bg-img-1
+{
+  background-image: url(../img/bg-1.png);
+}
+
+.title
+{
+  &.title-decoration-left
+  {
+    display: inline-block;
+    border-left: 3px solid $green-1;
+    line-height: 1;
+    padding-left: 10px;
+  }
+}
+
+.pager
+{
+  margin: 30px 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+
+  LI
+  {
+    display: inline-block;
+    line-height: 30px;
+    height: 30px;
+    min-width: 30px;
+    background: $gray-a;
+    @include font-size(s);
+    padding: 0;
+    // font-weight: bold;
+
+    &.pager-current
+    {
+      background: $green-1;
+      color: $white;
+    }
+  }
+
+  A
+  {
+    color: $gray-4;
+    text-decoration: none;
+    display: block;
+    padding: 0 5px;
+
+    &:hover
+    {
+      background: $green-1;
+      color: $white;
+    }
+  }
+}
+
+.modal
+{
+  .close
+  {
+    background: $green-1;
+    z-index: 9;
+    color: $white;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.b-r-green-1
+{
+  border-right: 1px solid $green-1;
+}
+
+UL
+{
+  margin-left: 0;
+  padding-left: 15px;
+  list-style: url(../img/bullet-green-1.jpg);
+
+  LI
+  {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+TABLE.table
+{
+  &.table-tabulation
+  {
+    width: 100%;
+    min-width: 900px;
+
+    THEAD
+    {
+      text-transform: uppercase;
+      color: $blue-1;
+
+      TH
+      {
+        font-weight: normal;
+        font-family: 'Roboto Condensed', $font-family-default;  
+        background: $blue-1;
+        color: $white;
+      }
+    }
+
+    > TR:nth-child(2n), TBODY > TR:nth-child(2n)
+    {
+      background: $gray-a;
+    }
+
+    > TR, TBODY > TR
+    {
+      TD
+      {
+        padding: 10px 5px;
+      }
+    }
+  }
+
+  &.table-list
+  {
+
+    border-collapse: collapse;
+
+    THEAD
+    {
+      text-transform: uppercase;
+      color: $blue-1;
+      font-weight: bold;
+    }
+
+    TBODY
+    {
+      TD
+      {
+        padding: 10px 5px;
+        border-bottom: 1px solid $gray-9;
+      }
+
+    }
+  }
+}
+
+.transparent
+{
+  opacity: 0;
+}
+
+.opaque
+{
+  opacity: 1;
+}
+
+.modal-open
+{
+  overflow: hidden;
+}
+
+@import 'forms';
+@import 'top-menu';
+@import 'header';
+@import 'carousel';
+@import 'block-1';
+@import 'block-2';
+@import 'news';
+@import 'footer';
+@import 'page';
+@import 'articles';
+@import 'reservation';
+@import 'datepicker';
+@import 'sports-links';
+@import 'basic-page';
+@import 'sports';
+@import 'user-forms';
+@import 'gallery';
+@import 'left-menu';
+@import 'node-168';
+@import 'node-225';
+@import 'branches';
+@import 'galleries';
+@import 'appointments';
+@import 'contracts';
+

@@ -1,0 +1,131 @@
+<?php
+
+/**
+ * @file
+ * defines the module clean_field_markup.
+ */
+
+
+function clean_field_markup_enable() {
+  db_update('system')
+  ->fields(array('weight' => 9))
+  ->condition('type', 'module')
+  ->condition('name', 'clean_field_markup')
+  ->execute();
+}
+
+function clean_field_markup_field_formatter_info_alter(&$info)
+{
+  foreach($info as &$field_info)
+  {
+    $field_info['settings']['cfm_clean_markup'] = true;
+  }
+
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary_alter().
+ */
+function clean_field_markup_field_formatter_settings_summary_alter(&$summary, $context) {
+
+  $display = $context['instance']['display'][$context['view_mode']];
+  $settings = $display['settings'];
+
+  if(empty($settings))
+  {
+    return;
+  }
+
+  if (!empty($summary)) {
+    $summary .= '<br />';
+  }
+
+  $summary .= '<br>' . t('Clean markup: @clean', array(
+    '@clean' => ($settings['cfm_clean_markup'] ? 'Yes' : 'No'),
+  ));
+
+}
+
+/**
+ * Implements hook_field_formatter_settings_form_alter().
+ */
+function clean_field_markup_field_formatter_settings_form_alter(&$settings_form, $context)
+{
+
+  $display = $context['instance']['display'][$context['view_mode']];
+  $settings = $display['settings'];
+
+  $settings_form['cfm_clean_markup'] = array(
+    '#type'           => 'checkbox',
+    '#title'          => t('Clean field markup'),
+    '#description'    => t('Removes Drupal markup around the field and labels.'),
+    '#default_value'  => $settings['cfm_clean_markup'],
+  );
+
+}
+
+/**
+ * Implements hook_preprocess_field().
+ */
+function clean_field_markup_preprocess_field(&$variables, $hook) {
+
+  // Check settings for field.
+  $element = $variables['element'];
+  $info = field_formatter_settings_get_instance_display_settings($element['#entity_type'],  $element['#field_name'], $element['#bundle'], $element['#view_mode']);
+
+  // Add theme hook suggestion if checkbox is on.
+  if (!empty($info['cfm_clean_markup']) && $info['cfm_clean_markup']) {
+    // $variables['theme_hook_suggestions'][] = 'clean_field_markup';
+    array_splice($variables['theme_hook_suggestions'], 1, 0, 'clean_field_markup');
+  }
+
+}
+
+/**
+ * Implements hook_theme().
+ */
+function clean_field_markup_theme($existing, $type, $theme, $path) {
+  return array(
+    'clean_field_markup' => array(),
+  );
+}
+
+/**
+ * Removes markup from the fields.
+ */
+function theme_clean_field_markup($vars)
+{
+  $output = '';
+//    kpr($item);
+  // Render the items.
+  foreach ($vars['items'] as $delta => &$item)
+  {
+    $output .= drupal_render($item);
+  }
+
+//  $output = '<div class="' . $vars['classes'] . '"' . $vars['attributes'] . '>' . $output . '</div>';
+  return $output;
+}
+
+// Not used. Just for refrence
+function ____theme_field($variables) {
+  $output = '';
+
+  // Render the label, if it's not hidden.
+  if (!$variables['label_hidden']) {
+    $output .= '<div class="field-label"' . $variables['title_attributes'] . '>' . $variables['label'] . ':&nbsp;</div>';
+  }
+
+  // Render the items.
+  $output .= '<div class="field-items"' . $variables['content_attributes'] . '>';
+  foreach ($variables['items'] as $delta => $item) {
+    $classes = 'field-item ' . ($delta % 2 ? 'odd' : 'even');
+    $output .= '<div class="' . $classes . '"' . $variables['item_attributes'][$delta] . '>' . drupal_render($item) . '</div>';
+  }
+  $output .= '</div>';
+
+  // Render the top-level DIV.
+  $output = '<div class="' . $variables['classes'] . '"' . $variables['attributes'] . '>' . $output . '</div>';
+
+  return $output;
+}

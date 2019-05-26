@@ -1,0 +1,4 @@
+name = CESAP: Reservas de eventos y hoteles
+description = Servicios web para la creación de reservas de eventos y hoteles
+package = CESAP
+core = 7.x

@@ -1,0 +1,5 @@
+name = CESAPP: Reglas para la app móvil.
+description = Alguna lógica para el funcionamiento de la app móvil.
+dependencies[] = services
+package = CESAP
+core = 7.x

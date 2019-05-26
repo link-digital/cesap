@@ -1,0 +1,18 @@
+name = CESAP theme
+description = Custom CESAP responsive theme.
+package = Core
+version = 0.01
+core = 7.x
+base theme = chipcha_base_theme
+
+;add
+stylesheets[all][] = css/cesap.main.css
+
+;scripts[] = js/main.js
+
+regions[top_bar] = Top bar
+regions[content] = Main page content
+regions[sidebar_first] = First sidebar
+regions[sidebar_right] = Right sidebar
+regions[sidebar_left] = Left sidebar
+regions_hidden[] = sidebar_first

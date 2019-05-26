@@ -1,0 +1,536 @@
+/* line 1, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_drupal.scss */
+.element-hidden {
+  display: none;
+}
+
+/* line 5, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_drupal.scss */
+.element-invisible {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  overflow: hidden;
+  height: 1px;
+}
+
+/* line 13, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_drupal.scss */
+.element-invisible.element-focusable:active, .element-invisible.element-focusable:focus {
+  position: static !important;
+  clip: auto;
+  overflow: visible;
+  height: auto;
+}
+
+/* line 24, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_drupal.scss */
+DIV.tabs UL.tabs {
+  padding: 0;
+  list-style: none;
+}
+
+/* line 29, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_drupal.scss */
+DIV.tabs UL.tabs LI {
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+/* line 34, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_drupal.scss */
+DIV.tabs UL.tabs LI.active {
+  border-bottom: 1px solid;
+}
+
+/* line 37, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_drupal.scss */
+DIV.tabs UL.tabs LI.active A {
+  color: #666;
+}
+
+/* line 44, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_drupal.scss */
+DIV.tabs UL.tabs LI A {
+  color: #999;
+}
+
+/* line 47, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_drupal.scss */
+DIV.tabs UL.tabs LI A:hover {
+  text-decoration: none;
+}
+
+/* line 59, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_drupal.scss */
+FORM#user-login .form-item, FORM#user-pass .form-item {
+  margin-bottom: 15px;
+}
+
+/* line 64, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_drupal.scss */
+FORM#user-login .form-actions, FORM#user-pass .form-actions {
+  margin: 30px 0;
+}
+
+/* line 69, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_drupal.scss */
+FORM#user-login LABEL, FORM#user-pass LABEL {
+  display: block;
+  width: 100%;
+}
+
+/* line 75, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_drupal.scss */
+FORM#user-login .description, FORM#user-pass .description {
+  font-size: .85em;
+  opacity: .5;
+}
+
+/* line 7, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+A {
+  -webkit-transition: all .3s;
+          transition: all .3s;
+}
+
+/* line 12, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+A.clean, .clean-a A {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/* line 18, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+A.no-decoration, .no-decoration-a A {
+  text-decoration: none;
+}
+
+/* line 22, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+A.no-decoration:hover, .no-decoration-a A:hover {
+  text-decoration: none;
+}
+
+/* line 30, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+UL.clean {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 36, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+UL.clean LI {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 46, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+UL.horizontal:before, UL.horizontal:after {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
+/* line 53, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+UL.horizontal > LI {
+  float: left;
+  padding: 0 5px;
+  display: inline-block;
+}
+
+/* line 62, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.img-responsive IMG, .responsive-img IMG, IMG.responsive {
+  max-width: 100%;
+  height: auto;
+}
+
+/* line 68, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+IMG.fullwidth, .fullwidth-img IMG {
+  width: 100%;
+  height: auto;
+}
+
+/* line 74, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.opaque {
+  opacity: 1 !important;
+}
+
+/* line 79, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.table {
+  display: table;
+  width: 100%;
+}
+
+/* line 84, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.table .td {
+  display: table-cell;
+}
+
+/* line 88, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.table .td-middle {
+  vertical-align: middle;
+}
+
+@media (max-width: 767px) {
+  /* line 95, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+  .text-xs-center {
+    text-align: center;
+  }
+}
+
+/* line 104, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.uppercase {
+  text-transform: uppercase;
+}
+
+/* line 110, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.col-no-padding {
+  padding: 0;
+}
+
+/* line 115, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.fullwidth-video {
+  position: relative;
+  padding-bottom: 56.25%;
+}
+
+/* line 120, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.fullwidth-video IFRAME {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 132, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+FORM.submitted :invalid {
+  box-shadow: 0 0 2px 2px #f66;
+}
+
+/* line 138, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+FORM [disabled] {
+  opacity: .5;
+  pointer-events: none;
+}
+
+/* line 145, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.carousel {
+  position: relative;
+}
+
+/* line 149, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.carousel .indicators {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+}
+
+/* line 158, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.carousel .indicators LI {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border: 1px solid;
+  margin: 0 5px;
+  border-radius: 50%;
+  -webkit-transition: all .3s;
+          transition: all .3s;
+  cursor: pointer;
+}
+
+/* line 169, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.carousel .indicators LI.active {
+  background-color: white;
+}
+
+/* line 176, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.carousel .carousel-progress {
+  position: absolute;
+  bottom: 0;
+  border-top: 2px solid;
+}
+
+/* line 184, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_framework.scss */
+.no-transition {
+  -webkit-transition-property: none !important;
+          transition-property: none !important;
+}
+
+@media (max-width: 767px) {
+  /* line 4, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_desk-menu.scss */
+  #header-bar-lg {
+    display: none;
+  }
+}
+
+/* line 12, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_desk-menu.scss */
+#header-container {
+  height: 100px;
+  margin: 0 -15px;
+}
+
+/* line 18, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_desk-menu.scss */
+#header-bar-lg {
+  position: relative;
+  z-index: 20;
+  padding: 0 15px;
+}
+
+/* line 25, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_desk-menu.scss */
+#header-bar-lg #main-nav-lg, #header-bar-lg .logo-link {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* line 31, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_desk-menu.scss */
+#header-bar-lg .logo-lg {
+  height: 90px;
+  margin: 5px 0;
+  width: auto;
+}
+
+/* line 38, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_desk-menu.scss */
+#header-bar-lg .logo-sm {
+  height: 42px;
+  margin: 2px;
+  display: none;
+}
+
+/* line 45, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_desk-menu.scss */
+#header-bar-lg.fixed-menu {
+  position: fixed;
+  z-index: 99;
+  height: 50px !important;
+  width: 100%;
+  top: 0;
+  -webkit-animation: fixmenu .6s;
+          animation: fixmenu .6s;
+  background-color: white;
+}
+
+/* line 55, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_desk-menu.scss */
+#header-bar-lg.fixed-menu .logo-sm {
+  display: inline;
+}
+
+/* line 60, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_desk-menu.scss */
+#header-bar-lg.fixed-menu .logo-lg {
+  display: none;
+}
+
+/* line 80, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_desk-menu.scss */
+#header-bar-lg.fixed-menu .menu-container {
+  position: relative;
+  top: 0;
+  height: 50px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  /* line 80, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_desk-menu.scss */
+  #header-bar-lg.fixed-menu .menu-container {
+    max-width: 710px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* line 80, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_desk-menu.scss */
+  #header-bar-lg.fixed-menu .menu-container {
+    max-width: 930px;
+  }
+}
+
+@media (min-width: 1200px) {
+  /* line 80, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_desk-menu.scss */
+  #header-bar-lg.fixed-menu .menu-container {
+    max-width: 1140px;
+  }
+}
+
+@-webkit-keyframes fixmenu {
+  from {
+    margin-top: -100px;
+  }
+  to {
+    margin-top: 0;
+  }
+}
+
+@keyframes fixmenu {
+  from {
+    margin-top: -100px;
+  }
+  to {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  /* line 3, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+  #header-container {
+    height: 40px;
+  }
+}
+
+/* line 11, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+#header-bar-sm {
+  height: 40px;
+}
+
+@media (min-width: 768px) {
+  /* line 11, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+  #header-bar-sm {
+    display: none;
+  }
+}
+
+/* line 21, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+NAV#main-nav-sm {
+  width: 100%;
+  line-height: 1;
+  height: 40px;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100%;
+  z-index: 100;
+  background: white;
+}
+
+/* line 35, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+NAV#main-nav-sm #mobile-menu-wrapper {
+  -webkit-transition: all .3s;
+          transition: all .3s;
+  opacity: 0;
+  text-align: left;
+  max-width: 400px;
+  min-height: calc(100vh);
+  background: white;
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+}
+
+/* line 48, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+NAV#main-nav-sm .logo-link {
+  display: inline-block;
+  height: 40px;
+  vertical-align: middle;
+  padding: 5px;
+}
+
+/* line 55, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+NAV#main-nav-sm .logo-link .logo {
+  width: auto;
+  height: 30px;
+}
+
+/* line 63, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+NAV#main-nav-sm .btn-primary {
+  display: inline-block;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  vertical-align: middle;
+  position: absolute;
+  left: 0;
+  padding: 0;
+  margin: 7px;
+  background: transparent;
+  border: none;
+  width: 30px;
+}
+
+/* line 77, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+NAV#main-nav-sm .btn-primary > DIV {
+  border-bottom: 2px solid;
+  margin: 5px 0;
+  -webkit-transition: all .3s;
+          transition: all .3s;
+}
+
+/* line 85, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+NAV#main-nav-sm UL {
+  padding: 10px;
+  list-style: none;
+}
+
+/* line 90, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+NAV#main-nav-sm UL LI {
+  padding: 5px 10px;
+}
+
+/* line 103, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+NAV#main-nav-sm.show .btn-primary > DIV:nth-child(1) {
+  -webkit-transform: translateY(7px) rotate(135deg);
+          transform: translateY(7px) rotate(135deg);
+}
+
+/* line 107, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+NAV#main-nav-sm.show .btn-primary > DIV:nth-child(2) {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+
+/* line 111, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+NAV#main-nav-sm.show .btn-primary > DIV:nth-child(3) {
+  -webkit-transform: translateY(-7px) rotate(-135deg);
+          transform: translateY(-7px) rotate(-135deg);
+}
+
+/* line 118, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/_mobile-menu.scss */
+NAV#main-nav-sm.show #mobile-menu-wrapper {
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+  opacity: 1;
+}
+
+@-webkit-keyframes fadeMenu {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeMenu {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* line 8, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/chipcha.main.scss */
+.carousel .carousel-control {
+  background: none;
+  font-size: 40px;
+}
+
+/* line 14, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/chipcha.main.scss */
+.carousel .carousel-control .fa {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  -webkit-transition: all .3s;
+          transition: all .3s;
+}
+
+/* line 24, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/chipcha.main.scss */
+.carousel .carousel-control.left .fa {
+  left: 30px;
+}
+
+/* line 29, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/chipcha.main.scss */
+.carousel .carousel-control.left:hover {
+  -webkit-transform: translateX(-15px);
+          transform: translateX(-15px);
+}
+
+/* line 37, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/chipcha.main.scss */
+.carousel .carousel-control.right .fa {
+  right: 30px;
+}
+
+/* line 42, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/chipcha.main.scss */
+.carousel .carousel-control.right:hover {
+  -webkit-transform: translateX(15px);
+          transform: translateX(15px);
+}
+
+/* line 52, /Users/iiandresii/Sites/mcamilaparra/sites/all/themes/chipcha_base_theme/src/sass/chipcha.main.scss */
+.carousel .carousel-indicators LI {
+  margin: 0 5px;
+}

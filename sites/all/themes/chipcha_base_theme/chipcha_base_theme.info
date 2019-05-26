@@ -1,0 +1,24 @@
+name = Chipcha
+description = Base theme for Binit developments.
+package = Core
+version = 0.01
+core = 7.x
+
+;remove
+stylesheets[all][] = system.theme.css
+stylesheets[all][] = system.base.css
+stylesheets[all][] = system.menus.css
+
+;add
+;stylesheets[all][] = css/bootstrap.min.css
+stylesheets[all][] = css/chipcha.main.css
+stylesheets[all][] = css/font-awesome.min.css
+
+scripts[] = js/bootstrap.min.js
+scripts[] = js/ScrollMagic.min.js
+scripts[] = js/fixed-menu.js
+
+regions[header] = Header
+regions[content] = Main page content
+regions[sidebar_first] = First sidebar
+regions_hidden[] = sidebar_first

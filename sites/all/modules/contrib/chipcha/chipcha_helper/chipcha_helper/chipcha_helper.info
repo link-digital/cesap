@@ -1,0 +1,5 @@
+name = Chipcha helper
+description = Some helper functions as ajax contact form, sanitize urls and social networks plugin.
+package = Chipcha
+core = 7.x
+

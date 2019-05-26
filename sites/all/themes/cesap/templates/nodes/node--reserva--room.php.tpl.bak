@@ -1,0 +1,190 @@
+<div class="node-image">
+  <?php print render($content['field_image_1']) ?>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col sm-5 lg-4 col-form-reservation">
+      <div class="bg-blue-1 form-container">
+        <h2 class="font-size-m uppercase text-center color-white font-roboto-cnd">Cotizar</h2>
+  
+        <form action="return false;" class="reservation row color-white" name="reservation">
+  
+          <div class="col">
+            <div class="field">
+              <div class="custom-select">
+                <select name="user">
+                  <option value="">Tipo de usuario</option>
+                  <?php foreach(taxonomy_get_tree(1) as $t): ?>
+                  <option value="<?php print $t->name ?>"><?php print $t->name ?></option>
+                  <?php endforeach ?>
+                </select>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col">
+            <div class="field">
+              <div class="custom-select">
+                <select name="space">
+                  <option value="">Salón o zona</option>
+                  <?php foreach(taxonomy_get_tree(2) as $t): ?>
+                  <option value="<?php print $t->name ?>"><?php print $t->name ?></option>
+                  <?php endforeach ?>
+                </select>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col">
+            <div class="field">
+              <label class="flex flex-field">
+                <div class="label">Cantidad de asistentes</div>
+                <div class="input">
+                  <input type="text" name="attendants" id="attendants">
+                </div>
+              </label>
+            </div>
+          </div>
+  
+          <div class="col">
+            <div class="field">
+              <label>
+                <div class="label">Describa el evento</div>
+                <textarea name="description" type="text"></textarea>
+              </label>
+            </div>
+          </div>
+  
+          <div class="col tn-6 text-center">
+            <div class="m-tb-15">Require alimentos</div>
+            <label>
+              <input type="checkbox" name="foods" class="hidden" value="Sí"><div class="check"></div>
+            </label>
+          </div>
+  
+          <div class="col tn-6 text-center">
+            <div class="m-tb-15">Require bebidas</div>
+            <label>
+              <input type="checkbox" name="drinks" class="hidden" value="Sí"><div class="check"></div>
+            </label>
+          </div>
+  
+          <div class="col">
+            <div class="form-messages text-center js-messages" style="max-height: 0"></div>
+          </div>
+  
+          <div class="col">
+            <div class="actions m-t-20">
+              <button type="submit" class="btn btn-green-1-blue-2 uppercase fullwidth js-form-submit">Solicitar cotización</button>
+            </div>
+          </div>
+  
+        </form>
+      </div>
+    </div>
+
+    <div class="col sm-7 lg-8 col-content">
+      <h1 id="page-title" class="font-size-j font-roboto-cnd color-blue-1"><?php print $node->title ?></h1>
+      <?php print render($content['body']) ?>
+      <div class="row">
+        <div class="col sm-7">
+          <?php print render($content['field_longtext_1']) ?>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php 
+
+  include( __DIR__ . '/../partial/nuestras-instalaciones.tpl.php');
+
+?>
+
+<script>
+jQuery(function(){
+  var $ = jQuery;
+  var $messages = $('.js-messages');
+  var $formSubmit = $('.js-form-submit');
+
+  var user = {
+    uid: <?php print $user->uid ?>
+  };
+
+  $('#attendants').on('keyup', function(){
+    this.value = this.value.replace(/[^\d]/, '');
+  });
+
+  var form = document.forms.reservation;
+  $(form).on('submit', function(e){
+    e.preventDefault();
+
+    if(user.uid === 0){
+      alert('Debe iniciar sesión para realizar reservas');
+      return false;
+    } 
+
+    var error = false;
+
+    jQuery(this.elements).each(function(){
+      if(this.type == 'checkbox') return;
+      if(this.type == 'submit') return;
+      if(this.value == '') error = true;
+    });
+
+    var input = {
+      user: form.elements.user.value,
+      space: form.elements.space.value,
+      date: form.elements.date.value,
+      attendants: form.elements.user.value,
+      description: form.elements.user.value,
+      foods: 'No',
+      drinks: 'No'
+    }
+
+
+    if(error){
+      $messages.removeClass('message-success');
+      $messages.addClass('message-error');
+      $messages.html('Por favor llene todos los campos.');
+      $messages.animate({maxHeight: '60px'}, 300);
+    } else {
+      $messages.removeClass('message-error');
+      $messages.addClass('message-success');
+      $messages.html('Momento...');
+      $messages.animate({maxHeight: '60px'}, 300);
+      $formSubmit.html('...');
+
+      events_request('salones_eventos', {
+
+      })
+          .done(function(j){
+            $messages.addClass('message-success');
+            $messages.removeClass('message-error');
+            $messages.html('Su mensaje fue enviado. Pronto nos pondremos en contacto.');
+            $messages.animate({maxHeight: '60px'}, 300);
+          })
+          .fail(function(e){
+            $messages.addClass('message-error');
+            $messages.removeClass('message-success');
+            $messages.html('Error. Intente de nuevo más tarde.');
+            $messages.animate({maxHeight: '60px'}, 300);
+          })
+          .always(function(){
+            $formSubmit.html('Solicitar cotización');
+          });
+
+      // setTimeout(function(){
+      //   $messages.addClass('message-success');
+      //   $messages.removeClass('message-error');
+      //   $messages.html('Su mensaje fue enviado. Pronto nos pondremos en contacto.');
+      //   $messages.animate({maxHeight: '60px'}, 300);
+      // }, 1000);
+
+    }
+
+
+    return false;
+  });
+});
+</script>

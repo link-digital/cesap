@@ -1,0 +1,19 @@
+<?php
+/**
+ * @file
+ * Support module for services token module testing.
+ */
+
+/**
+ * Implements hook_init().
+ */
+function services_token_test_init() {
+  foreach (variable_get('services_token_test_sever_override', array()) as $key => $value) {
+    if (isset($value)) {
+      $_SERVER[$key] = $value;
+    }
+    else {
+      unset($_SERVER[$key]);
+    }
+  }
+}

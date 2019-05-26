@@ -1,0 +1,5 @@
+name = CESAP: Reservas 
+description = Visualización y creación de reservas
+package = CESAP
+dependencies[] = ezapp
+core = 7.x

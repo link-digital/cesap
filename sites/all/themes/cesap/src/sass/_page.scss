@@ -1,0 +1,16 @@
+.bg-page-title
+{
+  background: $blue-1 url(../img/bg-page-title.png) no-repeat right bottom;
+  margin-bottom: 50px;
+
+  .container
+  {
+    height: 160px;
+    align-items: center;
+  }
+
+  H1
+  {
+    margin: 0;
+  }
+}

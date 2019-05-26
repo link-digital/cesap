@@ -1,0 +1,17 @@
+name = Services Token
+description = Token resource and authentication for services
+core = 7.x
+
+dependencies[] = services
+
+; rest_server depends on libraries but that dependencie is not detected by the
+; automated testing infrastructure on drupal.org
+; https://www.drupal.org/node/2610952
+test_dependencies[] = libraries
+
+; Information added by Drupal.org packaging script on 2017-09-27
+version = "7.x-1.2"
+core = "7.x"
+project = "services_token"
+datestamp = "1506495848"
+

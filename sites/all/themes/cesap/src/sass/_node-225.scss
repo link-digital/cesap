@@ -1,0 +1,73 @@
+.page-node-225
+{
+
+  .col-2
+  {
+    @media (min-width:$screen-md)
+    {
+      padding-left: 40px;
+    }
+  }
+
+  FORM.contact
+  {
+    padding: 30px 15px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    TEXTAREA
+    {
+      resize: none;
+      height: 80px;
+    }
+
+    .label
+    {
+      flex: 0 0 80px;
+      max-width: 80px;
+    }
+
+    .field-message
+    {
+
+      .flex-field
+      {
+        flex-wrap: wrap;
+      }
+
+      .input
+      {
+        width: 100%;
+      }
+    }
+
+    .actions
+    {
+      BUTTON
+      {
+        width: 100%;
+      }
+    }
+  }
+
+  .table-list
+  {
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    TD:nth-child(2)
+    {
+      text-align: right;
+    }
+
+  }
+
+  .pqrs
+  {
+    A
+    {
+      width: 100%;
+    }
+  }
+
+}

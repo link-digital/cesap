@@ -1,0 +1,24 @@
+.page-node.node-type-evento,
+.page-node.node-type-actualidad
+{
+  #page-title
+  {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .container-main
+  {
+    padding-bottom: 50px;
+  }
+}
+
+.carousel-view-latest
+{
+  .col-image
+  {
+    max-width: 100% !important;
+    width: 100% !important;
+    flex-grow: 100%;
+  }
+}

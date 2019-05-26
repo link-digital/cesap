@@ -1,0 +1,25 @@
+.page-node-168
+{
+  .b-r-green-1
+  {
+    @media (min-width:$screen-md)
+    {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    @media (max-width:$screen-md - 1)
+    {
+      border: none;
+    }
+  }
+
+  .table-tabulation
+  {
+    .fa
+    {
+      font-size: 20px;
+    }
+  }
+  
+}

@@ -1,0 +1,96 @@
+$menu-height-static: 100px;
+$menu-height-fixed: 50px;
+
+#header-bar-lg
+{
+  @media (max-width: $screen-sm - 1)
+  {
+    display: none;
+  }
+}
+
+#header-container
+{
+	height: $menu-height-static;
+	margin: 0 (-$bs-margin);
+}
+
+#header-bar-lg
+{
+  position: relative;
+  z-index: 20;
+  padding: 0 15px;
+//  max-width: $max-page-width;
+
+	#main-nav-lg, .logo-link
+	{
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.logo-lg
+	{
+		height: $menu-height-static - 10px;
+		margin: 5px 0;
+		width: auto;
+	}
+
+	.logo-sm
+	{
+		height: $menu-height-fixed - 8px;
+		margin: 2px;
+		display: none;
+	}
+
+	&.fixed-menu
+	{
+		position: fixed;
+		z-index: 99;
+		height: $menu-height-fixed !important;
+		width:100%;
+		top:0;
+		animation: fixmenu .6s;
+		background-color: white;
+
+		.logo-sm
+		{
+			display: inline;
+		}
+
+		.logo-lg
+		{
+			display: none;
+		}
+
+		.menu-container
+		{
+			position: relative;
+			top: 0;
+			height: $menu-height-fixed;
+			width: 100%;
+			margin: 0 auto;
+
+			@media (min-width:$screen-sm) AND (max-width:$screen-md - 1)
+			{
+				max-width: 710px;
+			}
+
+			@media (min-width:$screen-md) AND (max-width:$screen-lg - 1)
+			{
+				max-width: 930px;
+			}
+
+			@media (min-width:$screen-lg)
+			{
+				max-width: $screen-lg - 60px;
+			}
+		}
+	}
+}
+
+@keyframes fixmenu
+{
+	from{margin-top: -100px}
+	to{margin-top: 0}
+}
+

@@ -1,0 +1,260 @@
+<?php
+
+/**
+ * Implements hook_image_default_styles().
+ */
+function chipcha_image_image_default_styles() {
+  $styles = array();
+
+  // Exported image style: sc_1.
+  $id = 100;
+
+  // SC
+  // 1
+  _chipcha_image_style_sc($styles, array(
+    'width' => 1920,
+    'height' => 750,
+    'id' => ++$id,
+  ));
+
+  // 2
+  _chipcha_image_style_sc($styles, array(
+    'width' => 360,
+    'height' => 360,
+    'id' => ++$id,
+  ));
+
+  // 3
+  _chipcha_image_style_sc($styles, array(
+    'width' => 870,
+    'height' => 540,
+    'id' => ++$id,
+  ));
+
+  // 4
+  _chipcha_image_style_sc($styles, array(
+    'width' => 420,
+    'height' => 280,
+    'id' => ++$id,
+  ));
+
+  // 5
+  _chipcha_image_style_sc($styles, array(
+    'width' => 900,
+    'height' => 330,
+    'id' => ++$id,
+  ));
+
+  // 6
+  _chipcha_image_style_sc($styles, array(
+    'width' => 600,
+    'height' => 500,
+    'id' => ++$id,
+  ));
+
+  // Scale
+  // 1
+  _chipcha_image_style_s($styles, array(
+    'width' => 350,
+    'height' => 60,
+    'upscale' => 0,
+    'id' => ++$id,
+  ));
+
+  // Canvas Size - CS
+  // 1
+  _chipcha_image_style_cs($styles, array(
+    'canvas_width' => 100,
+    'canvas_height' => 100,
+    'img_width' => 100,
+    'img_height' => 100,
+    'id' => ++$id,
+  ));
+
+  return $styles;
+}
+
+/**
+ * Implements hook_image_effect_info().
+ */
+function chipcha_image_image_effect_info() {
+  $effects = array(
+    'chipcha_canvas_size' => array(
+      'label' => t('Canvas size'),
+      'help' => t('Puts image into a static canvas size'),
+      'effect callback' => '_chipcha_image_canvas_size',
+      'form callback' => '_chipcha_image_canvas_size_form',
+//      'summary theme' => 'iek_image_border_summary',
+    ),
+  );
+  return $effects;
+}
+
+function _chipcha_image_style_sc(&$styles, $opts)
+{
+  static $sc_id = 0;
+
+  $styles['sc_' . ++$sc_id] = array(
+    'label' => 'Scale and crop ' . $opts['width'] . 'x' . $opts['height'],
+    'effects' => array(
+      $opts['id'] => array(
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => $opts['width'],
+          'height' => $opts['height'],
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+}
+
+function _chipcha_image_style_s(&$styles, $opts)
+{
+  static $s_id = 0;
+
+  $styles['s_' . ++$s_id] = array(
+    'label' => 'Scale ' . $opts['width'] . 'x' . $opts['height'],
+    'effects' => array(
+      $opts['id'] => array(
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => $opts['width'],
+          'height' => $opts['height'],
+          'upscale' => $opts['upscale'],
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+}
+
+function _chipcha_image_style_cs(&$styles, $opts)
+{
+  static $cs_id = 0;
+
+  if(empty($opts['img_width']))
+  {
+    $opts['img_width'] = $opts['canvas_width'] - 10;
+  }
+
+  if(empty($opts['img_height']))
+  {
+    $opts['img_height'] = $opts['canvas_height'] - 10;
+  }
+
+  $styles['cs_' . ++$cs_id] = array(
+    'label' => 'Canvas size ' . $opts['canvas_width'] . 'x' . $opts['canvas_height'],
+    'effects' => array(
+      1 => array(
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => $opts['img_width'],
+          'height' => $opts['img_height'],
+          'upscale' => 0,
+        ),
+        'weight' => -10,
+      ),
+      2 => array(
+        'name' => 'chipcha_canvas_size',
+        'data' => array(
+          'width' => $opts['canvas_width'],
+          'height' => $opts['canvas_height'],
+        ),
+        'weight' => -9,
+      ),
+    ),
+  );
+}
+
+function _chipcha_image_canvas_size(&$image, $data)
+{
+
+  $dst_x = ($data['width'] - $image->info['width']) / 2;
+  $dst_y = ($data['height'] - $image->info['height']) / 2;
+
+  $dst = imagecreatetruecolor($data['width'], $data['height']);
+/*
+  $black = imagecolorallocate($dst, 0, 0, 0);
+  imagecolortransparent($dst, $black);
+*/
+
+  imagealphablending($dst,false);
+
+  $col=imagecolorallocatealpha($dst,255,255,255,127);
+  imagefilledrectangle($dst,0,0,$data['width'],$data['height'],$col);
+  imagealphablending($dst,true);
+
+  if (!imagecopy($dst,
+    $image->resource,
+    $dst_x,
+    $dst_y,
+    0,
+    0,
+    $image->info['width'],
+    $image->info['height']))
+  {
+    return FALSE;
+  }
+
+  $image->resource = $dst;
+  $image->info['width'] = $data['width'];
+  $image->info['height'] = $data['width'];
+}
+
+function _chipcha_image_canvas_size_form($data)
+{
+  $form['width'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Width'),
+    '#default_value' => isset($data['width']) ? $data['width'] : '',
+    '#field_suffix' => ' ' . t('pixels'),
+    '#required' => TRUE,
+    '#size' => 5,
+    '#element_validate' => array('_chipcha_effect_natural_number_validate'),
+    '#allow_natural_number' => array('zero', 'positive'),
+  );
+  $form['height'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Height'),
+    '#default_value' => isset($data['height']) ? $data['height'] : '',
+    '#field_suffix' => ' ' . t('pixels'),
+    '#required' => TRUE,
+    '#size' => 5,
+    '#element_validate' => array('_chipcha_effect_natural_number_validate'),
+    '#allow_natural_number' => array('zero', 'positive'),
+  );
+  return $form;
+}
+
+function _chipcha_effect_natural_number_validate($element, &$form_state) {
+  $allow_natural_number = isset($element['#allow_natural_number']) ? $element['#allow_natural_number'] : array(
+    'negative',
+    'zero',
+    'positive',
+  );
+  $value = $element['#value'];
+  if (!is_numeric($value)) {
+    form_error($element, t('!name must be a number.', array('!name' => $element['#title'])));
+  }
+  elseif ($value > 0 && !in_array('positive', $allow_natural_number)) {
+    form_error($element, t('!name must be not a positive number.', array('!name' => $element['#title'])));
+  }
+  elseif ($value == 0 && !in_array('zero', $allow_natural_number)) {
+    form_error($element, t('!name must be not zero.', array('!name' => $element['#title'])));
+  }
+  elseif ($value < 0 && !in_array('negative', $allow_natural_number)) {
+    form_error($element, t('!name must be not a negative number.', array('!name' => $element['#title'])));
+  }
+}
+
+
+function chipcha_helper_views_pre_view(&$view, &$display, &$args)
+{
+  if($view->name == 'inmuebles' && $display == 'broker')
+  {
+    $parts = explode('-', $args[0]);
+    $target_id = array_pop($parts);
+    $args[0] = $target_id;
+  }
+}

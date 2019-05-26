@@ -1,0 +1,55 @@
+.region.region-sidebar-left
+{
+
+  .content >.menu
+  {
+    @media (max-width:$screen-sm - 1)
+    {
+      margin-top: -20px;
+    }
+
+    @media (min-width:$screen-sm)
+    {
+      margin-top: 30px;
+    }
+  }
+
+  .menu
+  {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-transform: uppercase;
+
+    @media (min-width:$screen-sm)
+    {
+      max-width: 250px;
+    }
+
+    A
+    {
+      color: inherit;
+      text-decoration: none;
+      display: block;
+      padding: 10px;
+      border-bottom: 1px solid $gray-8;
+      position: relative;
+
+      &::after
+      {
+        content: '\f105';
+        font-family: FontAwesome;
+        font-size: 25px;
+        color: $green-1;
+        position: absolute;
+        right: 0;
+        top: 2px;
+      }
+
+      &.active, &:hover
+      {
+        color: $green-1;
+      }
+    }
+  }
+}

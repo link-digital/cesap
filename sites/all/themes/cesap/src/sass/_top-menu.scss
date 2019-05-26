@@ -1,0 +1,42 @@
+#top-menu-container
+{
+  background: $blue-1;
+  padding-top: 8px;
+  padding-bottom: 8px;
+
+  .menu
+  {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    font-size: 11px;
+    text-transform: uppercase;
+
+    A
+    {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover, &.active
+      {
+        color: $green-1;
+      }
+    }
+
+    LI
+    {
+      margin: 0;
+      padding: 0;
+    }
+
+    color: $white;
+    justify-content: flex-end;
+  
+    LI
+    {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+}

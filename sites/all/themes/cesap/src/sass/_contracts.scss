@@ -1,0 +1,160 @@
+.view-contratacion
+{
+  .views-table TBODY
+  {
+    .views-field-field-fecha-entrega
+    {
+      width: 100px;
+      text-align: center;
+    }
+
+    .views-field-field-valor-cuantia
+    {
+      width: 150px;
+      text-align: right;
+    }
+
+    .views-field-view-node
+    {
+      text-align: center;
+      font-size: 26px;
+    }
+  }
+
+  .views-exposed-form .views-exposed-widgets
+  {
+    #edit-tipo
+    {
+      max-width: 300px;
+    }
+  }
+}
+
+.page-node.node-type-contratacion
+{
+  .process-detail
+  {
+    .process-row
+    {
+      // margin: 10px 0;
+      padding: 10px 0;
+      border-bottom: 1px solid $gray-9;
+
+      &:last-child
+      {
+        border-bottom: none;
+      }
+
+      @media (max-width:$screen-sm - 1)
+      {
+        flex-wrap: wrap;
+
+        .col-1, .col-2
+        {
+          width: 100%;
+        }
+      }
+    }
+
+    .col-1
+    {
+      min-width: 200px;
+      flex: 0 0 200px;
+    }
+
+    .col-2
+    {
+      flex-grow: 1;
+
+      .field
+      {
+        background: $white;
+      }
+    }
+  }
+
+  .field-name-field-adjuntos-contratacion
+  {
+    
+    > .field-items > .field-item
+    {
+      border-bottom: 1px solid $gray-9;
+      display: flex;
+
+      @media (max-width:$screen-sm - 1)
+      {
+        flex-wrap: wrap;
+
+        .field
+        {
+          width: 100%;
+        }
+      }
+    }
+
+    .field
+    {
+      padding: 10px 0;
+      margin: 0;
+      color: #666;
+    }
+
+    .field-name-field-tipo-archivo
+    {
+      flex: 0 0 200px;
+      min-width: 200px;
+    }
+
+    .field-name-field-archivo
+    {
+      flex-grow: 1;
+    }
+  }
+}
+
+.node-contratacion-form
+{
+  padding: 15px;
+  max-width: $screen-lg;
+  margin-left: auto;
+  margin-right: auto;
+
+  TABLE
+  {
+    border: 1px solid $gray-7;
+    width: 100%;
+  }
+
+  TR.even
+  {
+    background: $gray-b;
+  }
+
+  TR.drag-previous
+  {
+    background: #ffb;
+  }
+
+  a.tabledrag-handle
+  {
+    cursor: move;
+    float: left;
+    height: 1.7em;
+    overflow: hidden;
+    text-decoration: none;
+    
+    .handle
+    {
+      background: url(../../../../../misc/draggable.png) no-repeat 6px 9px;
+      height: 23px;
+      width: 23px;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .form-actions
+  {
+    padding: 10px 0;
+  }
+}

@@ -1,0 +1,624 @@
+<?php
+
+//require_once DRUPAL_ROOT . '/modules/image/image.field.inc';
+
+/**
+ * @file
+ * defines the module website.
+ */
+
+function chipcha_helper_menu()
+{
+  return array(
+    'ajax/sendmail' => array(
+      'title' => 'Sendmail',
+      'page callback' => '_chipcha_helper_ajax_sendmail',
+      'access callback' => TRUE,
+      'page arguments' => array(),
+      'type' => MENU_CALLBACK,
+    ),
+    'ajax/node/%' => array(
+      'title' => 'Node',
+      'page callback' => '_chipcha_helper_ajax_node_view',
+      'access callback' => TRUE,
+      'page arguments' => array(2),
+      'type' => MENU_CALLBACK,
+    ),
+  );
+}
+
+/**
+* Implements hook_field_formatter_info().
+*/
+function chipcha_helper_field_formatter_info() {
+  return array(
+    'field_carousel_formatter' => array(
+        'label' => t('Carousel'),
+        'field types' => array('image'),
+        'settings' => array(
+          'interval' => '7000',
+          'as_background' => false,
+          'indicators' => true,
+          'arrows' => true,
+          'responsive_items' => '',
+          'image_style' => '',
+        ),
+      ),
+    );
+}
+
+function chipcha_helper_entity_info_alter(&$entity_info)
+{
+  $entity_info['node']['view modes']['teaser_2'] = array(
+     'label' => t('Teaser') . ' 2',
+     'custom settings' => TRUE,
+   );
+}
+
+/**
+ * Implements hook_theme().
+ */
+function chipcha_helper_theme() {
+  return array(
+    'field_items_carousel' => array(
+      'variables' => array('interval' => NULL, 'as_background' => NULL, 'indicators' => NULL, 'arrows' => NULL, 'responsive_items' => NULL, 'items' => NULL),
+    ),
+  );
+}
+
+function _chipcha_helper_ajax_node_view($nid)
+{
+  global $base_url;
+  global $language;
+  
+  $referer = str_replace($base_url, '', $_SERVER['HTTP_REFERER']);
+  $lang = arg(1, $referer);
+  $languages = language_list();
+  $language = $languages[$lang];
+  $GLOBALS['language_content'] = $language;
+  
+  $n = node_load($nid);
+  $nv = node_view($n);
+
+  echo drupal_render($nv);
+}
+
+function chipcha_helper_preprocess_page(&$vars)
+{
+  if(request_path() == 'contacto')
+  {
+    drupal_add_js(drupal_get_path('module', 'chipcha_helper') . '/js/contact.js');
+  }
+}
+
+function chipcha_helper_pathauto_alias_alter(&$alias, array &$context)
+{
+  _chipcha_helper_sanitize_url($alias);
+}
+
+function _chipcha_helper_sanitize_url(&$alias)
+{
+  $trans = array(
+    ' ' => '-',
+    'á' => 'a',
+    'é' => 'e',
+    'í' => 'i',
+    'ó' => 'o',
+    'ú' => 'u',
+    'ü' => 'u',
+    'ñ' => 'n',
+  );
+  $alias = strtr($alias, $trans);
+  $alias = preg_replace('/[^a-zA-Z0-9\/\-]+/', '', $alias);
+}
+
+function _chipcha_helper_ajax_sendmail()
+{
+  if(empty($_POST))
+  {
+    echo '[error]';
+    drupal_exit();
+  }
+
+  $body = '';
+  foreach($_POST as $k => $v)
+  {
+  	$body .= "$k: $v\n";
+  }
+
+  $to = variable_get('site_mail');
+
+  $subject = 'Contacto de página ' . variable_get('site_name');
+
+  $my_module = 'website';
+  $my_mail_token = 'bar';
+  $host = $_SERVER['HTTP_HOST'];
+//  $from = 'no_responder@' . $host;
+
+  $message = array(
+    'id' => $my_module . '_' . $my_mail_token,
+    'to' => $to,
+    'subject' => $subject,
+    'body' => array($body),
+    'headers' => array(
+//      'From' => $host . '<' . $from . '>',
+      'Sender' => $from,
+      'Return-Path' => $from,
+    ),
+  );
+
+  $system = drupal_mail_system($my_module, $my_mail_token);
+  $message = $system->format($message);
+
+
+  if ($system->mail($message))
+  	echo "[OK]";
+  else
+  	echo "[ERROR]";
+}
+
+function chipcha_helper_form_system_site_information_settings_alter(&$form, $form_state, $form_id)
+{
+  // Text
+  $site_config = array(
+    // 'site_phones_ext' => array('name' => 'Extensiones', 'description' => 'Números de extensión de las áreas.'),
+    'site_address' => array('name' => 'Dirección', 'description' => 'Dirección de contacto.'),
+    'site_copyright' => array('name' => 'Copyright', 'description' => 'Mensaje en el pie de página.'),
+    'site_phones' => array('name' => 'PBX', 'description' => 'Teléfonos de contacto.'),
+    'ea_api_url' => array('name' => 'API EasyAppoinments', 'description' => 'URL de conexión a la API de E!A.'),
+  );
+
+  foreach($site_config as $key => $val)
+  {
+    $form['site_information'][$key] = array(
+      '#type' => 'textfield',
+      '#title' => t($val['name']),
+      '#default_value' => variable_get($key, ''),
+      '#description' => t($val['description']),
+    );
+  }
+
+  // Textarea
+  $site_config = array(
+    'site_phones_ext' => array('name' => 'Extensiones', 'description' => 'Números de extensión de las áreas.'),
+    'site_social_net' => array('name' => 'Redes sociales', 'description' => 'Agrege la dirección completa (http://twitter...). Una por cada línea.'),
+  );
+
+  foreach($site_config as $key => $val)
+  {
+    $form['site_information'][$key] = array(
+      '#type' => 'textarea',
+      '#title' => t($val['name']),
+      '#description' => t($val['description']),
+      '#default_value' => variable_get($key, ''),
+    );
+  }
+
+  // Image
+  $site_config = array(
+    'site_certs' => array('name' => 'Certificaciones', 'description' => ''),
+  );
+
+  foreach($site_config as $key => $val)
+  {
+    $form['site_information'][$key] = array(
+      '#type' => 'managed_file',
+      '#title' => t($val['name']),
+      '#description' => t($val['description']),
+      '#default_value' => variable_get('site_certs', ''),
+      '#upload_location' => 'public://site_config/',
+      '#upload_validators' => array(
+        'file_validate_extensions' => array('gif png jpg jpeg'),
+      ),
+    );
+  }
+
+  $form['#submit'][] = '_chipcha_helper_setting_form_files';
+
+}
+
+function _chipcha_helper_setting_form_files($form, &$form_state)
+{
+  global $user;
+  $file = file_load($form_state['values']['site_certs']);
+  if ($file) {
+    $file->status = FILE_STATUS_PERMANENT;
+    file_save($file);
+    variable_set('site_certs', $file->fid);
+    file_usage_add($file, 'user', 'user', $user->uid);
+    unset($form_state['values']['site_certs']);
+  }
+}
+
+function _chipcha_helper_render_social_net()
+{
+  $output = '';
+
+  if($list = variable_get('site_social_net', ''))
+  {
+    $social_net = explode("\n", str_replace("\r", "", $list));
+
+    foreach($social_net as $net)
+    {
+      $host = strtolower(str_replace('www.', '', parse_url($net, PHP_URL_HOST)));
+      $host = pathinfo($host, PATHINFO_FILENAME);
+      if($host == 'plus.google')
+      {
+        $host = 'google-plus';
+      }
+      $output .= '<a target="_blank" href="' . $net . '"><i class="fa fa-' . $host . '"></i></a>';
+    }
+  }
+
+  return $output;
+}
+
+function _chipcha_helper_path_to_theme($full = false)
+{
+  if($full)
+    return base_path() . drupal_get_path('theme', variable_get('theme_default')) . '/';
+  else
+    return drupal_get_path('theme', variable_get('theme_default')) . '/';
+}
+
+function _chipcha_helper_render_theme_image($name, $opts = array())
+{
+  $default_opts = array(
+    'render' => true,
+    'attributes' => array(),
+  );
+
+  $opts = array_merge($default_opts, $opts);
+
+  if($opts['render'])
+  {
+    $output = '<img src="' . _chipcha_helper_path_to_theme(1) . 'img/' . $name . '"';
+
+    if(is_array($opts['attributes']))
+    {
+      foreach($opts['attributes'] as $name => $value)
+      {
+        $output .= ' ' . $name . '="' . htmlentities($value) . '"';
+      }
+    }
+
+    $output .= '>';
+
+  }
+  else
+  {
+    $output = _chipcha_helper_path_to_theme(1) . 'img/' . $name;
+  }
+
+  return $output;
+}
+
+////// Carousel
+/**
+* Implements hook_field_formatter_settings_form().
+*/
+function chipcha_helper_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+  $element = array();
+
+  $element['interval'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Interval'),
+    '#description' => t('Carousel interval. Zero (0) for static.'),
+    '#default_value' => $settings['interval'],
+  );
+
+  $element['as_background'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use image as background'),
+    '#description' => t('Check to put images on background'),
+    '#default_value' => $settings['as_background'],
+  );
+
+  $element['indicators'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Carousel indicators'),
+    '#description' => t('Check to display indicators'),
+    '#default_value' => $settings['indicators'],
+  );
+
+  $element['arrows'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Carousel arrows'),
+    '#description' => t('Check to display arrows'),
+    '#default_value' => $settings['arrows'],
+  );
+
+  $element['responsive_items'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Responsive items'),
+    '#description' => t('Responsive items behavior (size:number,size:number. Ie. 320:1,720:3)'),
+    '#default_value' => $settings['responsive_items'],
+  );
+
+  $image_styles = image_style_options(FALSE, PASS_THROUGH);
+  $element['image_style'] = array(
+    '#title' => t('Image style'),
+    '#type' => 'select',
+    '#default_value' => $settings['image_style'],
+    '#empty_option' => t('None (original image)'),
+    '#options' => $image_styles,
+  );
+  return $element;
+}
+
+
+/**
+* Implements hook_field_formatter_settings_summary().
+*/
+function chipcha_helper_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  $summary = t('Indicators: @indicators. Background: @as_background. Arrows: @arrows. Style: @style', array(
+    '@interval' => $settings['interval'],
+    '@as_background' => ($settings['as_background'] ? 'True' : 'False'),
+    '@indicators' => ($settings['indicators'] ? 'True' : 'False'),
+    '@arrows' => ($settings['arrows'] ? 'True' : 'False'),
+    '@style' => $settings['image_style'],
+  ));
+
+  return $summary;
+}
+
+/**
+* Implements hook_field_formatter_view().
+*/
+function chipcha_helper_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  $settings = $display['settings'];
+
+  $element[] = array(
+    '#theme' => 'field_items_carousel',
+    '#interval' => $settings['interval'],
+    '#arrows' => $settings['arrows'],
+    '#as_background' => $settings['as_background'],
+    '#indicators' => $settings['indicators'],
+    '#responsive_items' => $settings['responsive_items'],
+    '#items' => array(),
+  );
+
+  foreach ($items as $delta => $item)
+  {
+    $element[0]['#items'][$delta] = array(
+      '#theme' => 'image_formatter',
+      '#item' => $item,
+      '#image_style' => $display['settings']['image_style'],
+      '#path' => isset($uri) ? $uri : '',
+    );
+  }
+
+  return $element;
+}
+
+function theme_field_items_carousel($variables)
+{
+  $uid = uniqid();
+  $count = count($variables['items']);
+  $output = '<div id="tns-' . $uid . '" class="tns-container">';
+
+  // Content
+  if($variables['as_background'])
+  {
+    foreach($variables['items'] as $delta => $item)
+    {
+      $image_uri      = $item['#item']['uri'];
+      $style          = $item['#image_style'];
+      $derivative_uri = image_style_path($style, $image_uri);
+      $success        = file_exists($derivative_uri) || image_style_create_derivative(image_style_load($style), $image_uri, $derivative_uri);
+      $image_url  = file_create_url($derivative_uri);
+
+      $output .= '<div><div style="background-image:url(' . $image_url . ')" class="tns-image-bg"></div></div>';
+    }
+  }
+  else
+  {
+    foreach($variables['items'] as $delta => $item)
+    {
+      $output .='<div>';
+      $output .= drupal_render($item);
+      $output .= '</div>';
+    }
+  }
+
+  $output .= '</div>';
+
+  if($count > 0)
+  {
+    $options = array(
+      'container' => '#tns-' . $uid,
+      'items' => 1,
+      'autoplay' => true,
+      'autoplayTimeout' => $variables['interval'],
+      'nav' => $variables['indicators'],
+      'controls' => false,
+      'autoplayButtonOutput' => false,
+      'mouseDrag' => true,
+    );
+
+    if($variables['arrows'])
+    {
+      $options['controls'] = true;
+      $options['controlsText'] = array('<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>');
+    }
+
+    if($variables['responsive_items'])
+    {
+      $items = explode(',', $variables['responsive_items']);
+      $options['responsive'] = array();
+
+      foreach($items as $item)
+      {
+        list($size, $len) = explode(':', $item);
+        $options['responsive'][check_plain($size)]['items'] = check_plain($len);
+      }
+    }
+
+    $output .= '<script>';
+    $output .= "tns(" . json_encode($options) . ")";
+    $output .= '</script>';
+  }
+
+  return $output;
+}
+
+function DEPRECATED_theme_field_items_carousel($variables)
+{
+  $id = uniqid();
+  $count = count($variables['items']);
+  $output = '<div id="carousel-' . $id . '" class="carousel slide" data-ride="carousel" data-interval="' . $variables['interval'] . '">';
+
+  // Indicators
+  if($variables['indicators'] && $count > 1)
+  {
+    $output .= '<ol class="carousel-indicators">';
+
+    foreach($variables['items'] as $delta => $item)
+    {
+      $output .='<li data-target="#carousel-' . $id . '" data-slide-to="' . $delta . '"';
+
+      if($delta == 0)
+      {
+         $output .= ' class="active"';
+      }
+
+      $output .= '></li>';
+    }
+
+    $output .= '</ol>';
+  }
+
+  // Content
+  $output .= '<div class="carousel-inner" role="listbox">';
+
+  foreach($variables['items'] as $delta => $item)
+  {
+    $output .='<div class="item' . ($delta == 0 ? ' active' : '') . '">';
+    $output .= render($item);
+    $output .= '</div>';
+  }
+
+  $output .= '</div>';
+
+  // Arrows
+  if($variables['arrows'] && $count > 1)
+  {
+    $output .= '<a class="left  carousel-control" href="#carousel-' . $id . '" role="button" data-slide="prev"><span class="fa fa-angle-left" aria-hidden="true"></span><span class="sr-only">Previous</span></a>';
+    $output .= '<a class="right carousel-control" href="#carousel-' . $id . '" role="button" data-slide="next"><span class="fa fa-angle-right" aria-hidden="true"></span><span class="sr-only">Next</span></a>';
+  }
+
+
+  $output .= '</div>';
+
+  return $output;
+}
+
+function _chipcha_helper_render_external_video($_url, $view_mode = 'teaser')
+{
+  $url = parse_url($_url);
+
+  if(strpos($url['host'], 'youtube.com') !== FALSE)
+  {
+    parse_str($url['query'], $qs);
+    $id = $qs['v'];
+  }
+  if(strpos($url['host'], 'youtu.be') !== FALSE)
+  {
+    $id = $url['path'];
+  }
+
+  if($view_mode == 'teaser')
+  {
+    return theme('imagecache_external', array(
+        'path' => 'https://img.youtube.com/vi/' . $id . '/0.jpg',
+        'style_name'=> 'sc_3',
+        'attributes' => array('data-video_id' => $id),
+    ));
+  }
+
+}
+
+function _chipcha_helper_url($path, $options=array())
+{
+  if(strpos($path, "http") === 0)
+  {
+    $options['external'] = empty($options['external']) ? true : $options['external'];
+  }
+
+  return url($path, $options);
+}
+
+function _chipcha_helper_l($text, $path, $options=array())
+{
+  if(strpos($path, "http") === 0)
+  {
+    $options['external'] = empty($options['external']) ? true : $options['external'];
+    $options['attributes']['target'] = empty($options['attributes']['target']) ? '_blank' : $options['attributes']['target'];
+  }
+
+  return l($text, $path, $options);
+}
+
+function _chipcha_helper_render_image($field, $style = NULL, $delta = -1)
+{
+  if($delta >= 0)
+  {
+    $field[$delta]['#image_style'] = $style;
+    return drupal_render($field[$delta]);
+  }
+
+  if($style)
+  {
+    foreach($field['#items'] as $delta => $item)
+    {
+      $field[$delta]['#image_style'] = $style;
+    }
+  }
+
+  return drupal_render($field);
+}
+
+function _chipcha_helper_render_image_url($field, $style = NULL, $delta = 0)
+{
+  if($delta >= 0)
+  {
+    $output = '';
+    if($style)
+    {
+      // $image_uri      = $field[$delta]['#item']['uri'];
+      // $derivative_uri = image_style_path($style, $image_uri);
+      // $output  = file_create_url($derivative_uri);
+
+      $image_uri      = $field[$delta]['#item']['uri'];
+      $output  = image_style_url($style, $image_uri);
+    }
+    else
+    {
+      $image_uri      = $field[$delta]['#item']['uri'];
+      $output  = file_create_url($image_uri);
+    }
+
+    return $output;
+  }
+
+  return 'please select a delta';
+}
+
+function _chipcha_helper_render_node($node, $view_mode = NULL)
+{
+  if(is_numeric($node))
+  {
+    $node = node_load($node);
+  }
+
+  $nv = node_view($node, $view_mode);
+
+  return drupal_render($nv);
+}

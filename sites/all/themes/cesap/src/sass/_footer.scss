@@ -1,0 +1,46 @@
+FOOTER
+{
+  background: #15232a;
+  padding-top: 70px;
+  padding-bottom: 40px;
+  margin-top: 15px;
+
+  @media (max-width:$screen-sm - 1)
+  {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .col-contact-data
+  {
+    @media (max-width:$screen-sm - 1)
+    {
+      text-align: center;
+    }
+  }
+
+  .logo-link
+  {
+    display: inline-block;
+    margin-top: -16px;
+
+    @media (max-width:$screen-md - 1)
+    {
+      margin-bottom: 20px;
+    }
+
+  }
+
+  .footer-title
+  {
+    @media (max-width:$screen-md - 1)
+    {
+      margin-top: 20px;
+    }
+  }
+
+  .contact-data
+  {
+    line-height: 1.8em;
+  }
+}

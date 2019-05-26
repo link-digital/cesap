@@ -1,0 +1,80 @@
+.element-hidden {
+    display: none;
+}
+
+.element-invisible {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+    overflow: hidden;
+    height: 1px;
+}
+
+.element-invisible.element-focusable:active, .element-invisible.element-focusable:focus {
+    position: static !important;
+    clip: auto;
+    overflow: visible;
+    height: auto;
+}
+
+DIV.tabs
+{
+//  background: #f0f0f0;
+
+  UL.tabs
+  {
+    padding: 0;
+    list-style: none;
+    
+    LI
+    {
+      display: inline-block;
+      padding: 5px 10px;
+      
+      &.active
+      {
+        border-bottom: 1px solid;
+        A
+        {
+          color: #666;
+        }
+        
+      }
+      
+      A
+      {
+        color: #999;
+        &:hover
+        {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+
+FORM#user-login, FORM#user-pass, FORM#user-register-form
+{
+	.form-item
+	{
+		margin-bottom: 15px;
+	}
+	
+	.form-actions
+	{
+		margin: 30px 0;
+	}
+	
+	LABEL
+	{
+		display: block;
+		width: 100%;
+	}
+	
+	.description
+	{
+		font-size: .85em;
+		opacity: .8;
+	}
+}

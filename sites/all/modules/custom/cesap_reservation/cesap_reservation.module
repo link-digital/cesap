@@ -1,0 +1,110 @@
+<?php
+ini_set('display_errors', 1);
+error_reporting(-1);
+
+/**
+* Implementation of hook_menu().
+*/
+function cesap_reservation_menu()
+{
+
+  $items['api/v1/otras_reservas/hotel'] = array(
+    'title' => 'Reservas de hotel',
+    'page callback' => '_cesap_other_reservation',
+    'access arguments' => array('cesap create event reservation'),
+    'type' => MENU_NORMAL_ITEM,
+  );  
+
+  $items['api/v1/otras_reservas/salones_eventos'] = array(
+    'title' => 'Reservas de hotel',
+    'page callback' => '_cesap_other_reservation',
+    'access arguments' => array('cesap create event reservation'),
+    'type' => MENU_NORMAL_ITEM,
+  );  
+
+  return $items;
+}
+
+/**
+* Implementation of hook_permission().
+*/
+function cesap_reservation_permission()
+{
+  
+  return array(
+    'cesap create event reservation' => array(
+      'title' => t('Create events and hotel reservations'),
+      'description' => t('Allow user to create events an hotel resevations.'),
+    ),
+  );
+  
+}
+
+
+/**
+* Data format;
+*    {
+*     user: '',
+*     space: '',
+*     date: '',
+*     attendans: '',
+*     description: '',
+*     foods: false,
+*     drinks: false
+*   }
+*/
+function _cesap_other_reservation()
+{
+  $raw = file_get_contents('php://input');
+  $data = json_decode($raw);
+  global $user;
+
+  if(empty($data))
+  {
+    die(':(');
+  }
+
+  $body = array();
+  $images = array();
+  foreach($data as $k => $v)
+  {
+    if($k == 'images')
+    {
+      $images = $v;
+    }
+    else
+    {
+      $body[] = "<b>$k</b>: $v";
+    }
+  }
+
+  foreach($images as $img)
+  {
+    $body[] = '<img src="' . $img . '" />';
+  }
+  
+  $node = (object) array(
+    'type' => 'reserva_app',
+    'uid' => $user->uid,
+    'status' => 1,
+    'title' => 'Reserva uid ' . $user->uid,
+    'body' => array(
+      LANGUAGE_NONE => array(
+        array(
+          // 'value' => $data,
+          'value' => implode('<br>', $body),
+          'format' => 'full_html',
+        )
+      ),
+    )
+  );
+
+  node_object_prepare($node);
+
+  node_save($node);
+
+  echo json_encode(array(
+    'status' => 'success',
+    'mesage' => 'Bien!',
+  ));
+}

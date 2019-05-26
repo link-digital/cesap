@@ -1,0 +1,166 @@
+/*
+@font-face {
+  font-family: 'OpenSans';
+  src: url("../fonts/OpenSans-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+*/
+
+@mixin font-size($size)
+{
+	font-size: map-get($font-size, $size);
+}
+
+// @mixin font-size($size)
+// {
+// 	@media (min-width:$screen-md)
+// 	{
+// 		font-size: map-get($font-size, $size);
+// 	}
+
+// 	@media (max-width:$screen-md - 1)
+// 	{
+// 		font-size: map-get($font-size-sm, $size);
+// 	}
+// }
+
+$font-size: (
+	xj: 70px, 
+	j: 48px, 
+	xxxl: 36px, 
+	xxl: 28px, 
+	xl: 26px, 
+	l: 22px, 
+	m: 20px, 
+	xn: 18px,
+	n: 16px,
+	s: 14px, 
+	xs: 12px,
+	xxs: 10px
+);
+
+$font-size-sm: (
+	xj: 60px, 
+	j: 40px, 
+	xxxl: 36px, 
+	xxl: 24px, 
+	xl: 22px, 
+	l: 20px, 
+	m: 18px, 
+	xn: 18px,
+	n: 16px,
+	s: 14px, 
+	xs: 12px,
+	xxs: 10px
+);
+
+// $font-size: (xxl: 28px, xl: 26px, l: 22px, m: 18px, n: 16px, s: 14px, xs: 12px);
+
+
+// $font-size-l3: 28px;
+// $font-size-l2: 24px;
+// $font-size-l1: 20px;
+// $font-size-m1: 18px;
+// $font-size-n: 16px;
+// $font-size-s1: 14px;
+// $font-size-s2: 12px;
+
+
+.font-roboto-cnd
+{
+	font-family: $font-roboto-cnd, 'Roboto', sans;
+}
+
+.font-default
+{
+	font-family: $font-family-default;
+}
+
+.font-light
+{
+	font-weight: 300;
+}
+
+.font-regular
+{
+	font-weight: normal;
+}
+
+.font-medium
+{
+	font-weight: 500;
+}
+
+.font-bold
+{
+	font-weight: 700;
+}
+
+.font-black
+{
+	font-weight: 900;
+}
+
+.font-italic
+{
+	font-style: italic;
+}
+
+@each $size-name, $size in $font-size-sm
+{
+	@media (max-width:$screen-sm - 1)
+	{
+		&.font-size-#{$size-name}
+		{
+			font-size: $size;
+		}
+	}
+}	
+
+@each $size-name, $size in $font-size
+{
+	@media (min-width:$screen-sm)
+	{
+		&.font-size-#{$size-name}
+		{
+			font-size: $size;
+		}
+	}
+}	
+
+
+// .font-size-s2
+// {
+// 	font-size: $font-size-s2;
+// }
+
+// .font-size-s
+// {
+// 	font-size: $font-size-s;
+// }
+
+// .font-size-n
+// {
+// 	font-size: $font-size-n;
+// }
+
+// .font-size-m
+// {
+// 	font-size: $font-size-m;
+// }
+
+// .font-size-l
+// {
+// 	font-size: $font-size-l;
+// }
+
+// .font-size-xl
+// {
+// 	font-size: $font-size-xl;
+// }
+
+// .font-size-xxl
+// {
+// 	font-size: $font-size-xxl;
+// }

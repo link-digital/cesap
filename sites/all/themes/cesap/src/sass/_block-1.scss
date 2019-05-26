@@ -1,0 +1,42 @@
+.front .block-1
+{
+  padding-top: 50px;
+  padding-bottom: 50px;
+
+  H3
+  {
+    margin-top: 0;
+  }
+
+  .flex-col
+  {
+    @media (min-width:$screen-sm)
+    {
+      max-width: 33%;
+    }
+
+    @media (max-width:$screen-sm - 1)
+    {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
+  .flex-items
+  {
+    margin-top: 30px;
+    flex-wrap: wrap;
+  }
+
+  .item
+  {
+    margin: 10px;
+    @media (max-width:$screen-sm - 1)
+    {
+      max-width: 200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+}

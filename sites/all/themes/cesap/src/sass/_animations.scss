@@ -1,0 +1,203 @@
+.entrance
+{
+  opacity: 0;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.no-animation
+{
+	animation-name: none !important;
+}
+
+@keyframes fadeInUp {
+	0% {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fadeInDown {
+	0% {
+		opacity: 0;
+		transform: translateY(-30px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+//Fade in left
+@keyframes fadeInLeft {
+	0% {
+		opacity: 0;
+		transform: translateX(-30px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes fadeOutLeft {
+	0% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateX(-30px);
+	}
+}
+
+//Fade in right
+@keyframes fadeInRight {
+	0% {
+		opacity: 0;
+		transform: translateX(30px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes fadeOutRight {
+	0% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateX(30px);
+	}
+}
+
+@keyframes moveLeft {
+	0% {
+		opacity: 0;
+		transform: translateX(10px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes moveRight {
+	0% {
+		transform: translateX(0px);
+	}
+
+	100% {
+		transform: translateX(10px);
+	}
+}
+
+@keyframes heart {
+	0%, 100% {
+		transform: scale(1);
+	}
+
+	50% {
+		transform: scale(.9);
+	}
+}
+
+@keyframes bounce {
+	0%, 100% {
+		transform: translateY(0);
+	}
+
+	50% {
+		transform: translateY(10px);
+	}
+}
+
+.fadeIn
+{
+  opacity: 1;
+}
+
+.fadeInUp
+{
+	animation-name: fadeInUp;
+}
+
+.fadeInDown
+{
+	animation-name: fadeInDown;
+}
+
+.fadeLeft
+{
+  animation-duration: 1s;
+	animation-fill-mode: forwards;
+	opacity: 0;
+
+	&.in
+	{
+		animation-delay: 1s;
+		animation-name: fadeInLeft;
+	}
+
+	&.out
+	{
+		animation-name: fadeOutLeft;
+	}
+}
+
+.fadeRight
+{
+  animation-duration: 1s;
+	animation-fill-mode: forwards;
+	opacity: 0;
+
+	&.in
+	{
+		animation-delay: 1.5s;
+		animation-name: fadeInRight;
+	}
+
+	&.out
+	{
+		animation-name: fadeOutRight;
+	}
+}
+
+.moveLeft
+{
+	animation-name: moveLeft;
+}
+
+.animationDelay
+{
+	animation-delay: .5s;
+}
+
+// Vue
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}

@@ -1,0 +1,4 @@
+name = Chipcha Image
+description = Image helper utilities.
+package = Chipcha
+core = 7.x

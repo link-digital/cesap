@@ -1,0 +1,4 @@
+name = Website
+description = Reglas varias para control del portal
+package = CESAP
+core = 7.x

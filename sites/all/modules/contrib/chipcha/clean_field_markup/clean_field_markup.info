@@ -1,0 +1,7 @@
+name = Clean Field Markup
+description = Removes unneeded markup around the fields.
+package = Chipcha
+core = 7.x
+
+dependencies[] = field
+dependencies[] = field_formatter_settings

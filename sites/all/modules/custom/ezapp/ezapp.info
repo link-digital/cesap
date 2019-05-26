@@ -1,0 +1,6 @@
+name = Easy! Appoinments fast integration
+description = Easy intregation to Drupal for Easy! Appoinments.
+package = Custom
+dependencies[] = services
+files[] = inc/ezapp_services.inc
+core = 7.x

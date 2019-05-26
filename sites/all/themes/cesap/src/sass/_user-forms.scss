@@ -1,0 +1,80 @@
+.bg-login
+{
+  background: url(../img/bg-login.jpg) no-repeat bottom right;
+  background-size: cover;
+  margin-bottom: -15px;
+}
+
+FORM#user-login .container-login, FORM#user-pass .container-login
+{
+  padding-top: 100px;
+  padding-bottom: 100px;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  .logo
+  {
+    margin-bottom: 10px;
+  }
+}
+
+FORM#user-login .user-login-inputs,
+FORM#user-pass .user-login-inputs
+{
+
+  max-width: 400px;
+  margin: 0 auto;
+
+  LABEL
+  {
+    display: none;
+  }
+
+  .icon
+  {
+    flex: 0 0 60px;
+    min-width: 60px;
+  }
+
+  .flex-input
+  {
+    background: rgba($white, .5);
+    margin: 15px auto;
+    padding: 5px 10px 0;
+  }
+
+  .form-item
+  {
+    margin: 0;
+
+    INPUT
+    {
+      width: 100%;
+      @include clean-button();
+      outline: none;
+
+      &::placeholder
+      {
+        color: rgba($white, .6);
+      }
+    }
+  }
+
+  .form-actions
+  {
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    INPUT
+    {
+      width: 100%;
+      @include font-size(m);
+    }
+  }
+
+  .actions
+  {
+    margin-bottom: 50px;
+  }
+
+}

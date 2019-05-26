@@ -1,0 +1,169 @@
+.view-sitio-actualidad
+{
+  margin-top: 30px;
+
+  .front &
+  {
+    margin-bottom: 60px;
+  }
+
+  .node-sitio-actualidad-teaser
+  {
+    margin: 0;
+
+    &:hover
+    {
+      .col-image
+      {
+        IMG
+        {
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    .col
+    {
+      display: flex;
+      flex-direction: column;
+      
+      .title
+      {
+        flex-grow: 1;
+      }
+    }
+
+    .col-image
+    {
+      padding: 0;
+      overflow: hidden;
+
+      @media (max-width:$screen-sm - 1)
+      {
+        max-height: 250px;
+        IMG
+        {
+          width: 100%;
+          max-width: initial;
+        }
+      }
+      
+      IMG
+      {
+        transition: all .3s;
+        display: block;
+      }
+    }
+
+  }
+
+  .row-items
+  {
+    > .col
+    {
+      padding-bottom: $lf-margin;
+      padding-top: $lf-margin;
+    }
+
+    .col-text
+    {
+      @media (max-width:$screen-sm - 1)
+      {
+        padding: 15px;
+      }
+
+      @media (min-width:$screen-sm) AND (max-width:$screen-lg - 1)
+      {
+        padding: 20px;
+      }
+      @media (min-width:$screen-lg)
+      {
+        padding: 40px;
+      }
+    }
+
+    .actions
+    {
+      .fa
+      {
+        font-size: 30px;
+        color: $green-1;
+        display: inline-block;
+        vertical-align: middle;
+        margin-top: -4px;
+      }
+    }
+
+    @media (max-width:$screen-sm - 1)
+    {
+      .col:nth-child(2n-1)
+      {
+        .col-text
+        {
+          background: $blue-1;
+        }
+      }
+      .col:nth-child(2n)
+      {
+        .col-text
+        {
+          background: $blue-2;
+        }
+      }
+    }
+
+    @media (min-width:$screen-sm)
+    {
+      .col:nth-child(4n), .col:nth-child(4n-1)
+      {
+        .col-image
+        {
+          order: 3;
+        }
+      }
+      .col:nth-child(4n), .col:nth-child(4n+1)
+      {
+        .col-text
+        {
+          background: $blue-1;
+        }
+      }
+      .col:nth-child(4n+2), .col:nth-child(4n+3)
+      {
+        .col-text
+        {
+          background: $blue-2;
+        }
+      }
+    }
+
+  }
+
+  .carousel-view-latest
+  {
+    color: $white;
+    padding-bottom: 30px;
+
+    .col-text
+    {
+      background: $blue-2;
+    }
+
+    .tns-nav
+    {
+      bottom: -30px;
+    }
+  }
+}
+
+#block-views-sitio-actualidad-latest
+{
+  h2
+  {
+    font-family: 'Roboto Condensed', $font-family-default;
+    color: $blue-1;
+    text-transform: uppercase;
+    margin-top: 15px;
+    @include font-size(xl);
+  }
+}
