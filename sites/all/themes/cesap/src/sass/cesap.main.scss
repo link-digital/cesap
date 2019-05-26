@@ -16,6 +16,23 @@ BODY
   line-height: 1.5;
 }
 
+.top-left-flag
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 111;
+  width: 100px;
+  height: 90px;
+  background: url(../img/bienestar.png) no-repeat left top;
+  background-size: cover;
+
+  @media (max-width:$screen-md - 1)
+  {
+    display: none;
+  }
+}
+
 A
 {
   color: $blue-2;

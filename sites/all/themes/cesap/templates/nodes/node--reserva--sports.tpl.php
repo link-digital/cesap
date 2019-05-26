@@ -5,6 +5,11 @@
 ?>
 <div class="container container-app">
   <h1 id="page-title" class="font-size-xxxl color-blue-1 font-roboto-cnd text-center uppercase">Reserva de zonas deportivas</h1>
+
+  <div class="text-center">
+    <?php print render($content['body']) ?>
+  </div>
+
   <div id="app">
 
     <div class="flex flex-steps">
