@@ -50,7 +50,39 @@ DIV.tabs
         }
       }
     }
+
+    &.primary
+    {
+      margin-left: $lf-margin;
+
+      LI
+      {
+        padding: 0;
+
+        &.active
+        {
+          border: none;
+        }
+
+        A
+        {
+          display: block;
+          color: $white;
+          text-decoration: none;
+          background: $blue-1;
+          padding: 4px 10px;
+
+          &:hover
+          {
+            background: $green-1;
+          }
+        }
+
+
+      }
+    }
   }
+
 }
 
 

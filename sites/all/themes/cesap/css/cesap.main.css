@@ -1915,23 +1915,52 @@ DIV.tabs UL.tabs LI A:hover {
   text-decoration: none;
 }
 
-/* line 59, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_drupal.scss */
+/* line 54, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_drupal.scss */
+DIV.tabs UL.tabs.primary {
+  margin-left: 7px;
+}
+
+/* line 58, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_drupal.scss */
+DIV.tabs UL.tabs.primary LI {
+  padding: 0;
+}
+
+/* line 62, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_drupal.scss */
+DIV.tabs UL.tabs.primary LI.active {
+  border: none;
+}
+
+/* line 67, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_drupal.scss */
+DIV.tabs UL.tabs.primary LI A {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  background: #28424e;
+  padding: 4px 10px;
+}
+
+/* line 75, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_drupal.scss */
+DIV.tabs UL.tabs.primary LI A:hover {
+  background: #c0e055;
+}
+
+/* line 91, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_drupal.scss */
 FORM#user-login .form-item, FORM#user-pass .form-item, FORM#user-register-form .form-item {
   margin-bottom: 15px;
 }
 
-/* line 64, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_drupal.scss */
+/* line 96, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_drupal.scss */
 FORM#user-login .form-actions, FORM#user-pass .form-actions, FORM#user-register-form .form-actions {
   margin: 30px 0;
 }
 
-/* line 69, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_drupal.scss */
+/* line 101, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_drupal.scss */
 FORM#user-login LABEL, FORM#user-pass LABEL, FORM#user-register-form LABEL {
   display: block;
   width: 100%;
 }
 
-/* line 75, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_drupal.scss */
+/* line 107, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_drupal.scss */
 FORM#user-login .description, FORM#user-pass .description, FORM#user-register-form .description {
   font-size: .85em;
   opacity: .8;

@@ -20,7 +20,14 @@
  */
 ?>
 <div class="container">
-  
+  <?php if(user_access('create contratacion content')): ?>
+  <div class="actions row">
+    <div class="col">
+    <a href="<?php print url('node/add/contratacion') ?>" class="btn btn-green-1-blue-1">Nuevo</a>
+    </div>
+  </div>
+  <?php endif ?>
+
   <?php if (!empty($q)): ?>
     <?php
       // This ensures that, if clean URLs are off, the 'q' is added first so that
