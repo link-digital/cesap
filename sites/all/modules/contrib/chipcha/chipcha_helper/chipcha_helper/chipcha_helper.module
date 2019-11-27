@@ -166,6 +166,7 @@ function chipcha_helper_form_system_site_information_settings_alter(&$form, $for
     'site_copyright' => array('name' => 'Copyright', 'description' => 'Mensaje en el pie de página.'),
     'site_phones' => array('name' => 'PBX', 'description' => 'Teléfonos de contacto.'),
     'ea_api_url' => array('name' => 'API EasyAppoinments', 'description' => 'URL de conexión a la API de E!A.'),
+    'zeus_api_url' => array('name' => 'API Zeus', 'description' => 'URL de conexión a la WS de Zeus'),
   );
 
   foreach($site_config as $key => $val)

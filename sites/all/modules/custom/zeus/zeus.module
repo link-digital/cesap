@@ -1,0 +1,10 @@
+<?php
+
+function zeus_get_account($dni)
+{
+  $z = new ZeusServices();
+  if($account = $z->accountStatus($dni))
+  {
+    return $account;
+  }
+}

@@ -1,0 +1,49 @@
+<?php
+// 1000.d6d3804270b11ba37bb34f0690c82634.91c6c4337bf2895360c66f37d10a5224
+// 1000.1924eea10937c09492b50f890c407d24.605144f200b6e7249ae42ccb16189d1b
+
+// https://accounts.zoho.com/oauth/v2/token?code=1000.1924eea10937c09492b50f890c407d24.605144f200b6e7249ae42ccb16189d1b&redirect_uri=http://cesap.binit.co/zohocrm/oauth2callback&client_id=1000.HMZEDD2T001OANN6ND3BNPFKHXNOKH&client_secret=7758043766ee6444f4c2788d11bd9e4c4ed7ebb1bf&grant_type=authorization_code
+
+use zcrmsdk\crm\setup\restclient\ZCRMRestClient;
+use zcrmsdk\oauth\ZohoOAuth;
+
+function zohocrm_accesstoken()
+{
+  $configuration = array(
+     "client_id" => "1000.HMZEDD2T001OANN6ND3BNPFKHXNOKH",
+     "client_secret" => "7758043766ee6444f4c2788d11bd9e4c4ed7ebb1bf",
+     "redirect_uri" => "http://cesap.binit.co/zohocrm/oauth2callback",
+     "currentUserEmail" => "cesap@dayscript.com",
+     "token_persistence_path" => "/tmp",
+    //  "tokenPersistencePath" => "/tmp/",
+  );
+     
+  // $configuration =array("client_id"=>{client_id},"client_secret"=>{client_secret},"redirect_uri"=>{redirect_url},"currentUserEmail"=>{user_email_id});
+  ZCRMRestClient::initialize($configuration);
+  $oAuthClient = ZohoOAuth::getClientInstance();
+  $grantToken = "1000.1f19c65ca486cea11ec9b3ef8aad6ff4.dc58b139053b05451f1a11d26b04f190";
+  $oAuthTokens = $oAuthClient->generateAccessToken($grantToken);
+
+  return $config;
+}
+
+function zohocrm_connect()
+{
+  `touch /tmp/zcrm_oauthtokens.txt`;
+  
+  $configuration = array(
+     "client_id" => "1000.HMZEDD2T001OANN6ND3BNPFKHXNOKH",
+     "client_secret" => "7758043766ee6444f4c2788d11bd9e4c4ed7ebb1bf",
+     "redirect_uri" => "http://cesap.binit.co/zohocrm/oauth2callback",
+     "currentUserEmail" => "cesap@dayscript.com",
+     "token_persistence_path" => "/tmp",
+    //  "tokenPersistencePath" => "/tmp/",
+  );
+     
+  ZCRMRestClient::initialize($configuration);
+
+  $rest = ZCRMRestClient::getInstance(); // to get the rest client
+  $modules = $rest->getAllModules()->getData(); // to get the the modules in form of ZCRMModule instances array
+
+  return $config;
+}

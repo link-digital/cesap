@@ -4291,33 +4291,40 @@ FOOTER .contact-data {
 }
 
 /* line 8, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
-FORM#user-login .container-login, FORM#user-pass .container-login {
+FORM#user-login .container-login,
+FORM#user-register-form .container-login,
+FORM#user-pass .container-login {
   padding-top: 100px;
   padding-bottom: 100px;
   padding-left: 15px;
   padding-right: 15px;
 }
 
-/* line 15, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
-FORM#user-login .container-login .logo, FORM#user-pass .container-login .logo {
+/* line 17, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
+FORM#user-login .container-login .logo,
+FORM#user-register-form .container-login .logo,
+FORM#user-pass .container-login .logo {
   margin-bottom: 10px;
 }
 
-/* line 21, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
+/* line 23, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
 FORM#user-login .user-login-inputs,
+FORM#user-register-form .user-login-inputs,
 FORM#user-pass .user-login-inputs {
   max-width: 400px;
   margin: 0 auto;
 }
 
-/* line 28, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
+/* line 31, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
 FORM#user-login .user-login-inputs LABEL,
+FORM#user-register-form .user-login-inputs LABEL,
 FORM#user-pass .user-login-inputs LABEL {
   display: none;
 }
 
-/* line 33, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
+/* line 36, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
 FORM#user-login .user-login-inputs .icon,
+FORM#user-register-form .user-login-inputs .icon,
 FORM#user-pass .user-login-inputs .icon {
   -webkit-box-flex: 0;
       -ms-flex: 0 0 60px;
@@ -4325,22 +4332,25 @@ FORM#user-pass .user-login-inputs .icon {
   min-width: 60px;
 }
 
-/* line 39, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
+/* line 42, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
 FORM#user-login .user-login-inputs .flex-input,
+FORM#user-register-form .user-login-inputs .flex-input,
 FORM#user-pass .user-login-inputs .flex-input {
   background: rgba(255, 255, 255, 0.5);
   margin: 15px auto;
   padding: 5px 10px 0;
 }
 
-/* line 46, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
+/* line 49, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
 FORM#user-login .user-login-inputs .form-item,
+FORM#user-register-form .user-login-inputs .form-item,
 FORM#user-pass .user-login-inputs .form-item {
   margin: 0;
 }
 
-/* line 50, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
+/* line 53, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
 FORM#user-login .user-login-inputs .form-item INPUT,
+FORM#user-register-form .user-login-inputs .form-item INPUT,
 FORM#user-pass .user-login-inputs .form-item INPUT {
   width: 100%;
   -webkit-appearance: none;
@@ -4360,44 +4370,52 @@ FORM#user-pass .user-login-inputs .form-item INPUT {
 
 /* line 48, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_framework.scss */
 FORM#user-login .user-login-inputs .form-item INPUT:hover,
+FORM#user-register-form .user-login-inputs .form-item INPUT:hover,
 FORM#user-pass .user-login-inputs .form-item INPUT:hover {
   text-decoration: none;
 }
 
-/* line 56, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
+/* line 59, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
 FORM#user-login .user-login-inputs .form-item INPUT::-webkit-input-placeholder,
+FORM#user-register-form .user-login-inputs .form-item INPUT::-webkit-input-placeholder,
 FORM#user-pass .user-login-inputs .form-item INPUT::-webkit-input-placeholder {
   color: rgba(255, 255, 255, 0.6);
 }
 FORM#user-login .user-login-inputs .form-item INPUT::-moz-placeholder,
+FORM#user-register-form .user-login-inputs .form-item INPUT::-moz-placeholder,
 FORM#user-pass .user-login-inputs .form-item INPUT::-moz-placeholder {
   color: rgba(255, 255, 255, 0.6);
 }
 FORM#user-login .user-login-inputs .form-item INPUT:-ms-input-placeholder,
+FORM#user-register-form .user-login-inputs .form-item INPUT:-ms-input-placeholder,
 FORM#user-pass .user-login-inputs .form-item INPUT:-ms-input-placeholder {
   color: rgba(255, 255, 255, 0.6);
 }
 FORM#user-login .user-login-inputs .form-item INPUT::placeholder,
+FORM#user-register-form .user-login-inputs .form-item INPUT::placeholder,
 FORM#user-pass .user-login-inputs .form-item INPUT::placeholder {
   color: rgba(255, 255, 255, 0.6);
 }
 
-/* line 63, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
+/* line 66, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
 FORM#user-login .user-login-inputs .form-actions,
+FORM#user-register-form .user-login-inputs .form-actions,
 FORM#user-pass .user-login-inputs .form-actions {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-/* line 68, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
+/* line 71, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
 FORM#user-login .user-login-inputs .form-actions INPUT,
+FORM#user-register-form .user-login-inputs .form-actions INPUT,
 FORM#user-pass .user-login-inputs .form-actions INPUT {
   width: 100%;
   font-size: 20px;
 }
 
-/* line 75, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
+/* line 78, ../../../../../var/www/html/cesap/sites/all/themes/cesap/src/sass/_user-forms.scss */
 FORM#user-login .user-login-inputs .actions,
+FORM#user-register-form .user-login-inputs .actions,
 FORM#user-pass .user-login-inputs .actions {
   margin-bottom: 50px;
 }

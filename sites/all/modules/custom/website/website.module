@@ -8,3 +8,29 @@ function website_form_user_profile_form_alter(&$form, &$form_state, $form_id)
     $form['actions']['cancel_edit']['#markup'] = l('Cancelar', 'user', array('attributes' => array('class' => array('btn'))));
   }
 }
+
+function website_form_user_register_form_alter(&$form, &$form_state, $form_id)
+{
+  $form['#validate'][] = 'website_form_user_register_form_alter_validate';
+}
+
+function website_form_user_register_form_alter_validate(&$form, &$form_state)
+{
+  // zohocrm_accesstoken();
+  // zohocrm_connect();
+
+  try
+  {
+    $account = zeus_get_account($form_state['values']['name']);
+    if(strtolower($account->item->estado) != 'a')
+    {
+      form_error($form['account']['mail'], 'El usuario no se encuentra activo.');
+    }  
+  }
+  catch(Exception $e)
+  {
+    form_error($form['account']['mail'], $e->getMessage());
+  }
+  // form_error($form['account']['mail'], 'Pailas');
+}
+

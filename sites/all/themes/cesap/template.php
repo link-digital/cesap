@@ -208,6 +208,13 @@ function cesap_theme()
     'template' => 'user-pass',
   );
 
+  $items['user_register_form'] = array (
+    'render element' => 'form',
+    'path' => drupal_get_path('theme', 'cesap') . '/templates/blocks/',
+    'template' => 'user-register',
+    // 'preprocess functions' => array('YOURTHEME_preprocess_user_register_form'),
+  );
+
   return $items;
 }
 

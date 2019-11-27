@@ -5,7 +5,9 @@
   margin-bottom: -15px;
 }
 
-FORM#user-login .container-login, FORM#user-pass .container-login
+FORM#user-login .container-login,
+FORM#user-register-form .container-login,
+FORM#user-pass .container-login
 {
   padding-top: 100px;
   padding-bottom: 100px;
@@ -19,6 +21,7 @@ FORM#user-login .container-login, FORM#user-pass .container-login
 }
 
 FORM#user-login .user-login-inputs,
+FORM#user-register-form .user-login-inputs,
 FORM#user-pass .user-login-inputs
 {
 

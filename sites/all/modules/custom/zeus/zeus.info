@@ -1,0 +1,5 @@
+name = CESAP Zeus integration
+description = Intregation to Drupal for CESAP Zeus
+package = Custom
+files[] = inc/zeus_services.inc
+core = 7.x

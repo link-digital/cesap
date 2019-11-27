@@ -1,0 +1,5 @@
+name = Zoho CRM integration
+description = Intregation to Drupal for CESAP Zoho CRM
+package = Custom
+files[] = inc/zeus_services.inc
+core = 7.x
