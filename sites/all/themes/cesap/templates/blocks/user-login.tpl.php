@@ -13,7 +13,7 @@
         <?php 
             $form['name']['#title_display'] = 'invisible';
             $form['name']['#description'] = '';
-            $form['name']['#attributes']['placeholder'] = 'Usuario';
+            $form['name']['#attributes']['placeholder'] = 'Nº de documento';
             $form['pass']['#title_display'] = 'invisible';
             $form['pass']['#description'] = '';
             $form['pass']['#attributes']['placeholder'] = 'Contraseña';

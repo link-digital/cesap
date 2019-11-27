@@ -1,18 +1,65 @@
 <?php
-// 1000.d6d3804270b11ba37bb34f0690c82634.91c6c4337bf2895360c66f37d10a5224
-// 1000.1924eea10937c09492b50f890c407d24.605144f200b6e7249ae42ccb16189d1b
-
-// https://accounts.zoho.com/oauth/v2/token?code=1000.1924eea10937c09492b50f890c407d24.605144f200b6e7249ae42ccb16189d1b&redirect_uri=http://cesap.binit.co/zohocrm/oauth2callback&client_id=1000.HMZEDD2T001OANN6ND3BNPFKHXNOKH&client_secret=7758043766ee6444f4c2788d11bd9e4c4ed7ebb1bf&grant_type=authorization_code
 
 use zcrmsdk\crm\setup\restclient\ZCRMRestClient;
 use zcrmsdk\oauth\ZohoOAuth;
 
+function _zohocrm_get_config()
+{
+  return array(
+    "client_id" => "1000.HMZEDD2T001OANN6ND3BNPFKHXNOKH",
+    "client_secret" => "7758043766ee6444f4c2788d11bd9e4c4ed7ebb1bf",
+    "redirect_uri" => "http://cesap.binit.co/zohocrm/oauth2callback",
+    "currentUserEmail" => 'cesap@dayscript.com',
+    "token_persistence_path" => "/tmp",
+ );
+}
+
+function zohocrm_tag_lead($dni, $tags)
+{
+  $configuration = _zohocrm_get_config();
+  ZCRMRestClient::initialize($configuration);
+
+  $rest = ZCRMRestClient::getInstance();
+  $moduleIns = $rest->getModuleInstance('Leads');
+  $criteria = "((IdC_digoMilitar:equals:{$dni}))";
+  $responseIns = NULL;
+  try
+  {
+    $param_map = [
+      "word" => NULL,
+      "phone" => NULL,
+      "email" => NULL,
+      "criteria" => NULL,
+    ];
+    
+    $response = $moduleIns->searchRecordsByCriteria($criteria, $param_map);
+    $records = $response->getData();
+    $record = $records[0];
+    // $tagNames = R;
+    $responseIns = $record->addTags($tags);
+  }
+  catch(Exception $e)
+  {
+
+  }
+
+  if(!$responseIns || $responseIns->getHttpStatusCode() != 200)
+  {
+    return false;
+  }
+
+
+  return true;
+}
+
+
 function zohocrm_accesstoken()
 {
+  return;
   $configuration = array(
+    "redirect_uri" => "http://cesap.binit.co/zohocrm/oauth2callback",
      "client_id" => "1000.HMZEDD2T001OANN6ND3BNPFKHXNOKH",
      "client_secret" => "7758043766ee6444f4c2788d11bd9e4c4ed7ebb1bf",
-     "redirect_uri" => "http://cesap.binit.co/zohocrm/oauth2callback",
      "currentUserEmail" => "cesap@dayscript.com",
      "token_persistence_path" => "/tmp",
     //  "tokenPersistencePath" => "/tmp/",
@@ -21,7 +68,7 @@ function zohocrm_accesstoken()
   // $configuration =array("client_id"=>{client_id},"client_secret"=>{client_secret},"redirect_uri"=>{redirect_url},"currentUserEmail"=>{user_email_id});
   ZCRMRestClient::initialize($configuration);
   $oAuthClient = ZohoOAuth::getClientInstance();
-  $grantToken = "1000.1f19c65ca486cea11ec9b3ef8aad6ff4.dc58b139053b05451f1a11d26b04f190";
+  $grantToken = "1000.d962bf71f138e0189f9b2302b177ef9a.fcd9ab5e4f1ad34f7ce4d13b35efd607";
   $oAuthTokens = $oAuthClient->generateAccessToken($grantToken);
 
   return $config;
@@ -29,13 +76,11 @@ function zohocrm_accesstoken()
 
 function zohocrm_connect()
 {
-  `touch /tmp/zcrm_oauthtokens.txt`;
-  
   $configuration = array(
      "client_id" => "1000.HMZEDD2T001OANN6ND3BNPFKHXNOKH",
      "client_secret" => "7758043766ee6444f4c2788d11bd9e4c4ed7ebb1bf",
      "redirect_uri" => "http://cesap.binit.co/zohocrm/oauth2callback",
-     "currentUserEmail" => "cesap@dayscript.com",
+     "currentUserEmail" => 'cesap@dayscript.com',
      "token_persistence_path" => "/tmp",
     //  "tokenPersistencePath" => "/tmp/",
   );
@@ -43,7 +88,31 @@ function zohocrm_connect()
   ZCRMRestClient::initialize($configuration);
 
   $rest = ZCRMRestClient::getInstance(); // to get the rest client
-  $modules = $rest->getAllModules()->getData(); // to get the the modules in form of ZCRMModule instances array
+  // $modules = $rest->getAllModules()->getData(); // to get the the modules in form of ZCRMModule instances array
+  $moduleIns = $rest->getModuleInstance('Leads'); // to get the the modules in form of ZCRMModule instances array
+  // kpr($modules);
+  // kpr($module);
 
-  return $config;
+  /* For VERSION <=2.0.6 $response = $moduleIns->getRecords(null, null, null, 1, 100, null); // to get the records(parameter - custom_view_id,field_api_name,sort_order,customHeaders is optional and can be given null if not required), customheader is a keyvalue pair for eg("if-modified-since"=>"2008-09-15T15:53:00")*/
+  $param_map=array("page"=>1,"per_page"=>10); // key-value pair containing all the parameters - optional
+  // $header_map = array("if-modified-since"=>"2019-11-15T15:26:49+05:30"); // key-value pair containing all the headers - optional
+  // $response = $moduleIns->getRecords($param_map); // to get the records($param_map - parameter map,$header_map - header map
+  // $records = $response->getData();
+  // $criteria = "((Last_Name:equals:Burns\,B)and(First_Name:starts_with:M))";
+  $criteria = "((IdTercero:equals:1094940513))";
+  $response = $moduleIns->searchRecordsByCriteria($criteria,$param_map); // to get the records($param_map - parameter map,$header_map - header map
+  $records = $response->getData();
+  $record = $records[0];
+
+  $tagNames = ['DrupalCreated'];
+  $responseIns = $record->addTags($tagNames); // to add tags
+  echo "HTTP Status Code:" . $responseIns->getHttpStatusCode(); // To get http response code
+  echo "Status:" . $responseIns->getStatus(); // To get response status
+  echo "Message:" . $responseIns->getMessage(); // To get response message
+  echo "Code:" . $responseIns->getCode(); // To get status code
+  echo "Details:" . json_encode($responseIns->getDetails());
+
+  return $modules;
 }
+
+

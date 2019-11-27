@@ -11,26 +11,65 @@ function website_form_user_profile_form_alter(&$form, &$form_state, $form_id)
 
 function website_form_user_register_form_alter(&$form, &$form_state, $form_id)
 {
-  $form['#validate'][] = 'website_form_user_register_form_alter_validate';
+  
+  global $user;
+  if($user->uid == 0)
+  {
+    $form['#validate'][] = 'website_form_user_register_form_alter_validate';
+    $form['#submit'][] = '_website_form_user_register_form_submit';
+  }
+
 }
 
 function website_form_user_register_form_alter_validate(&$form, &$form_state)
 {
-  // zohocrm_accesstoken();
-  // zohocrm_connect();
-
   try
   {
-    $account = zeus_get_account($form_state['values']['name']);
-    if(strtolower($account->item->estado) != 'a')
+    $dni = $form_state['values']['name'];
+    $account = zeus_get_account($dni);
+
+    if(strtolower($account->item->estado) == 'a')
+    {
+      zohocrm_tag_lead($dni, ['DrupalCreated']);
+    }
+    else
     {
       form_error($form['account']['mail'], 'El usuario no se encuentra activo.');
-    }  
+      zohocrm_tag_lead($dni, ['Inactive']);
+    }
   }
   catch(Exception $e)
   {
     form_error($form['account']['mail'], $e->getMessage());
   }
+
   // form_error($form['account']['mail'], 'Pailas');
 }
 
+function _website_form_user_register_form_submit(&$form, &$form_state)
+{
+  $form_state['user']->roles[4] = '';
+  $edit = array();
+  user_save($form_state['user'], $edit);
+  
+  // $form_state['user']->status = '2';
+  // $edit = array();
+  // $edit['field_text_1'][LANGUAGE_NONE][0]['value'] = $form_state['input']['field_text_1'];
+
+  // user_save($form_state['user'], $edit);
+
+  // try
+  // {
+  //   $data = [
+  //     'password' => password_hash($form_state['input']['pass']['pass1'], PASSWORD_DEFAULT),
+  //   ];
+
+  //   $output = CDMilitantesServices::put('/users/' . $form_state['user']->name . '/cambiar-contrasena', $data);
+  //   _website_send_validation_mail($form_state['user']);
+  // }
+  // catch(Exception $e)
+  // {
+  //   // var_dump($e->getMessage());
+  // }
+
+}
