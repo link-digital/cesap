@@ -25,7 +25,12 @@
           
           <div class="col sm-6 md-3">
             <div class="uppercase footer-title font-bold m-b-10">Certificaciones</div>
-            <?php print theme('image_style', array('style_name' => 's_1', 'path' => file_load(variable_get('site_certs'))->uri, 'getsize' => FALSE)); ?>
+            <?php 
+              if($fid = variable_get('site_certs'))
+              {
+                print theme('image_style', array('style_name' => 's_1', 'path' => file_load($fid)->uri, 'getsize' => FALSE));
+              }
+              ?>
           </div>
           
         </div>

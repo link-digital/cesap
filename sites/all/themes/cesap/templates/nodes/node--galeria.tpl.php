@@ -6,6 +6,11 @@
     <div class="font-size-s">
       <div class="font-size-l font-medium font-roboto-cnd uppercase"><?php print $node->title ?></div>
       <?php print render($content['field_longtext_1']) ?>
+      <?php if($pdf = render($content['field_archivo'])): ?>
+      <div class="text-center">
+        <a href="<?php print $pdf ?>" target="_blank" class="btn btn-blue-1-blue-2">Tarifas</a>
+      </div>
+      <?php endif ?>
     </div>
   </div>
 </div>
