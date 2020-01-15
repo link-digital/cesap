@@ -181,6 +181,7 @@ function chipcha_helper_form_system_site_information_settings_alter(&$form, $for
 
   // Textarea
   $site_config = array(
+    'zeus_hotel_reservation_url' => array('name' => 'URL de reservas de hotel', 'description' => 'URL de la página para reservas de hotel.'),
     'site_phones_ext' => array('name' => 'Extensiones', 'description' => 'Números de extensión de las áreas.'),
     'site_social_net' => array('name' => 'Redes sociales', 'description' => 'Agrege la dirección completa (http://twitter...). Una por cada línea.'),
   );

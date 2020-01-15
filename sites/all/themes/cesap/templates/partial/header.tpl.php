@@ -27,6 +27,8 @@
               <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'main-menu-desk', 'class' => array('clean', 'clean-a', 'flex', 'uppercase')))); ?>
               </nav>
               <?php endif ?>
+<?php 
+/*
               <div class="login font-roboto-cnd font-bold uppercase">
                 <?php if($user->uid === 0):  ?>
                 <a class="btn btn-green-1-blue-1" href="<?php print url('user') ?>">Ingresar <i class="fa fa-angle-right"></i></a>
@@ -34,6 +36,8 @@
                 <a class="btn btn-green-1-blue-1" href="<?php print url('user/' . $user->uid) ?>">Perfil <i class="fa fa-angle-right"></i></a>
                 <?php endif ?>
               </div>
+*/
+?>
             </div>
           </div>
         </div>
