@@ -10,7 +10,8 @@ function _zohocrm_get_config()
     "client_secret" => "7758043766ee6444f4c2788d11bd9e4c4ed7ebb1bf",
     "redirect_uri" => "http://cesap.binit.co/zohocrm/oauth2callback",
     "currentUserEmail" => 'cesap@dayscript.com',
-    "token_persistence_path" => "/tmp",
+    // "token_persistence_path" => "/tmp",
+    "token_persistence_path" => "./",
  );
 }
 
@@ -55,13 +56,13 @@ function zohocrm_tag_lead($dni, $tags)
 
 function zohocrm_accesstoken()
 {
-  return;
   $configuration = array(
     "redirect_uri" => "http://cesap.binit.co/zohocrm/oauth2callback",
      "client_id" => "1000.HMZEDD2T001OANN6ND3BNPFKHXNOKH",
      "client_secret" => "7758043766ee6444f4c2788d11bd9e4c4ed7ebb1bf",
      "currentUserEmail" => "cesap@dayscript.com",
-     "token_persistence_path" => "/tmp",
+     "token_persistence_path" => "./",
+    //  "token_persistence_path" => "/tmp",
     //  "tokenPersistencePath" => "/tmp/",
   );
      
